@@ -13,22 +13,17 @@ import { FooterComponent } from './_layout/components/footer/footer.component';
 import { HeaderComponent } from './_layout/components/header/header.component';
 import { HeaderMenuComponent } from './_layout/components/header/header-menu/header-menu.component';
 import { TopbarComponent } from './_layout/components/topbar/topbar.component';
-import { ExtrasModule } from '../_mdr/partials/layout/extras/extras.module';
+import { ExtrasModule } from '../_portal/partials/layout/extras/extras.module';
 import { LanguageSelectorComponent } from './_layout/components/topbar/language-selector/language-selector.component';
-import { CoreModule } from '../_mdr/core';
+import { CoreModule } from '../_portal/core';
 import {MatDividerModule} from '@angular/material/divider';
-import {FiltersPanelModule} from '../_mdr/partials/layout/extras/filters-panel/filters-panel.module';
+import {FiltersPanelModule} from '../_portal/partials/layout/extras/filters-panel/filters-panel.module';
 import {RouterModule} from '@angular/router';
-import {StudyPageComponent} from './study-page/study-page.component';
+import {ResourcePageComponent} from './resource-page/resource-page.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import {MainPageComponent} from './main-page/main-page.component';
-import {MainPageContentModule} from '../_mdr/partials/content/portal/main-page-content.module';
-import {DataObjectsHelpComponent} from './data-objects-help/data-objects-help.component';
-import {RestComponent} from './api/rest/rest.component';
-import {GraphqlComponent} from './api/graphql/graphql.component';
-import {EsBasedComponent} from './api/es-based/es-based.component';
-import {ApiPageComponent} from './api/api-page.component';
+import {MainPageContentModule} from '../_portal/partials/content/portal/main-page-content.module';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
@@ -57,13 +52,7 @@ import {SingleStudyExportModalComponent} from './_layout/components/topbar/modal
     SingleStudyExportModalComponent,
 
     MainPageComponent,
-    StudyPageComponent,
-    DataObjectsHelpComponent,
-
-    ApiPageComponent,
-    RestComponent,
-    GraphqlComponent,
-    EsBasedComponent,
+    ResourcePageComponent,
   ],
   imports: [
     CommonModule,
@@ -87,28 +76,8 @@ import {SingleStudyExportModalComponent} from './_layout/components/topbar/modal
         component: MainPageComponent
       },
       {
-        path: 'data-object-types',
-        component: DataObjectsHelpComponent
-      },
-      {
-        path: 'study/:id',
-        component: StudyPageComponent
-      },
-      {
-        path: 'for-developers',
-        component: ApiPageComponent
-      },
-      {
-        path: 'api/rest',
-        component: RestComponent
-      },
-      {
-        path: 'api/graphql',
-        component: GraphqlComponent
-      },
-      {
-        path: 'api/es-based',
-        component: EsBasedComponent
+        path: 'resource/:id',
+        component: ResourcePageComponent
       },
     ]),
     FormsModule,

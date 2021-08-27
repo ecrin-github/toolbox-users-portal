@@ -1,6 +1,8 @@
+import {SearchTypeInterface} from '../requests/request-body.interface';
+
 export interface SessionDataInterface {
-  searchType: string;
-  searchBody: object;
+  searchType: SearchTypeInterface;
+  searchValue: string;
   filters?: Array<any>;
 }
 

@@ -1,18 +1,18 @@
 import {Component, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import { LayoutService } from '../../../../_mdr/core';
+import { LayoutService } from '../../../../_portal/core';
 import KTLayoutQuickPanel from '../../../../../assets/js/layout/extended/quick-panel';
 import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-topbar';
 import { KTUtil } from '../../../../../assets/js/components/util';
-import {StatesService} from '../../../../_mdr/core/services/state/states.service';
-import {SubscriptionEvents} from '../../../../_mdr/core/states/subscription-events';
+import {StatesService} from '../../../../_portal/core/services/state/states.service';
+import {SubscriptionEvents} from '../../../../_portal/core/states/subscription-events';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ExportModalComponent} from './modals/export-modal/export-modal.component';
 import {SaveModalComponent} from './modals/save-modal/save-modal.component';
 import {LoadModalComponent} from './modals/load-modal/load-modal.component';
-import {SingleStudyExportModalComponent} from './modals/single-study-export-modal/single-study-export-modal.component';
-import {RawQueryInterface} from '../../../../_mdr/core/interfaces/requests/raw-query.interface';
-import {SnackbarService} from '../../../../_mdr/core/services/snackbar/snackbar.service';
+import {SingleResourceExportModalComponent} from './modals/single-resource-export-modal/single-resource-export-modal.component';
+import {SnackbarService} from '../../../../_portal/core/services/snackbar/snackbar.service';
+import {RequestBodyInterface} from '../../../../_portal/core/interfaces/requests/request-body.interface';
 
 
 @Component({
@@ -48,14 +48,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
 
     this.statesService.isCleared = true;
 
-    const searchType = '';
-    const searchBody: RawQueryInterface = {
-      page: 0,
-      size: 10,
-      query: {}
-    };
-
-    this.statesService.searchParams = {searchType, searchBody};
+    // this.statesService.searchParams = {searchType, searchBody};
 
     this.subscriptionEvents.sendClearEvent();
 
@@ -77,7 +70,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
   openSingleStudyModal() {
-    this.modal.open(SingleStudyExportModalComponent, {centered: true});
+    this.modal.open(SingleResourceExportModalComponent, {centered: true});
   }
 
 

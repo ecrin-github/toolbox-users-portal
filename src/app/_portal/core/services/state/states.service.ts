@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {States} from '../../states/states';
 import {DefaultStates} from '../../states/default.states';
-import {SearchParamsInterface} from '../../interfaces/search-params/search-params.interface';
-import {Study} from '../../interfaces/entities/study.interface';
 import {SessionDataInterface, SessionRecordInterface} from '../../interfaces/states/session.interface';
-import {FilterSampleInterface} from '../../interfaces/filters/filter-sample.interface';
+import {RequestBodyInterface} from '../../interfaces/requests/request-body.interface';
+import {FilterInterface} from '../../interfaces/filters/filter.interface';
+import {ResourceInterface} from '../../interfaces/entities/resource.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -49,10 +49,10 @@ export class StatesService {
     return this.states.searchParams.getValue();
   }
 
-  set searchParams(value: SearchParamsInterface) {
+  set searchParams(value: RequestBodyInterface) {
     this.states.searchParams.next({
       searchType: value.searchType,
-      searchBody: value.searchBody
+      searchValue: value.searchValue
     });
   }
 
@@ -66,7 +66,7 @@ export class StatesService {
     return this.states.filtersList.getValue();
   }
 
-  set filtersList(filters: Array<FilterSampleInterface>) {
+  set filtersList(filters: Array<FilterInterface>) {
     this.states.filtersList.next(filters);
   }
 
@@ -80,8 +80,8 @@ export class StatesService {
     return this.states.singleStudy.getValue();
   }
 
-  set singleStudy(study: Study) {
-    this.states.singleStudy.next(study);
+  set singleStudy(resource: ResourceInterface) {
+    this.states.singleStudy.next(resource);
   }
 
   setDefaultSingleStudy() {

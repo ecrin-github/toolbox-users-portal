@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { LayoutService } from '../../../../_mdr/core';
+import { LayoutService } from '../../../../_portal/core';
 import { environment } from 'src/environments/environment.prod';
 
 
@@ -44,7 +44,7 @@ export class HeaderMobileComponent implements OnInit, AfterViewInit {
   private getLogoUrl() {
     const headerSelfTheme = this.layout.getProp('header.self.theme') || '';
     const brandSelfTheme = this.layout.getProp('brand.self.theme') || '';
-    let result = 'ecrin-logo.jpg';
+    /*let result = 'ecrin-logo.jpg';
     if (!this.asideSelfDisplay) {
       if (headerSelfTheme === 'light') {
         result = 'ecrin-logo.jpg';
@@ -54,6 +54,7 @@ export class HeaderMobileComponent implements OnInit, AfterViewInit {
         result = 'ecrin-logo.jpg';
       }
     }
-    return `./assets/media/logos/${result}`;
+    return `./assets/media/logos/${result}`;*/
+    return `https://www.eosc-life.eu/wp-content/themes/eosc-life-v2/assets/images/eosclogo.png`;
   }
 }

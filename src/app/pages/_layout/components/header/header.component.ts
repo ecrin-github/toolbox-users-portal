@@ -14,7 +14,7 @@ import {
   NavigationEnd,
   NavigationCancel,
 } from '@angular/router';
-import { LayoutService } from '../../../../_mdr/core';
+import { LayoutService } from '../../../../_portal/core';
 import KTLayoutHeader from '../../../../../assets/js/layout/base/header';
 import KTLayoutHeaderMenu from '../../../../../assets/js/layout/base/header-menu';
 import { KTUtil } from '../../../../../assets/js/components/util';
@@ -90,7 +90,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLogoURL(): string {
-    let result = 'ecrin-logo.jpg';
+    /*let result = 'ecrin-logo.jpg';
 
     if (this.headerSelfTheme && this.headerSelfTheme === 'light') {
       result = 'ecrin-logo.jpg';
@@ -98,9 +98,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.headerSelfTheme && this.headerSelfTheme === 'dark') {
       result = 'ecrin-logo.jpg';
-    }
+    }*/
 
-    return `./assets/media/logos/${result}`;
+    // return `./assets/media/logos/${result}`;
+    return `https://www.eosc-life.eu/wp-content/themes/eosc-life-v2/assets/images/eosclogo.png`;
   }
 
   ngAfterViewInit(): void {

@@ -25,7 +25,7 @@ export class LanguageSelectorComponent implements OnInit {
       translate: 'LANGUAGES.ENGLISH',
       flag: './assets/media/svg/flags/012-uk.svg'
     },
-    {
+    /*{
       lang: 'fr',
       name: 'French',
       translate: 'LANGUAGES.FRENCH',
@@ -66,7 +66,7 @@ export class LanguageSelectorComponent implements OnInit {
       name: 'Slovak',
       translate: 'LANGUAGES.SLOVAK',
       flag: './assets/media/svg/flags/091-slovakia.svg'
-    }
+    }*/
   ];
   constructor(
     private translationService: TranslationService,

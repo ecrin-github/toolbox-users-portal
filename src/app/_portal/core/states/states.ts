@@ -2,9 +2,10 @@ import {BehaviorSubject} from 'rxjs';
 import {DefaultStates} from './default.states';
 import {Injectable} from '@angular/core';
 import {SessionDataInterface, SessionRecordInterface} from '../interfaces/states/session.interface';
-import {Study} from '../interfaces/entities/study.interface';
-import {FilterSampleInterface} from '../interfaces/filters/filter-sample.interface';
-import {SearchParamsInterface} from '../interfaces/search-params/search-params.interface';
+import {ResourceInterface} from '../interfaces/entities/resource.interface';
+import {FilterInterface} from '../interfaces/filters/filter.interface';
+import {RequestBodyInterface} from '../interfaces/requests/request-body.interface';
+
 
 @Injectable({providedIn: 'root'})
 export class States {
@@ -20,14 +21,14 @@ export class States {
   public isFiltered: BehaviorSubject<boolean> =
       new BehaviorSubject<boolean>(this.defaultStates.defaultIsFiltered);
 
-  public searchParams: BehaviorSubject<SearchParamsInterface> =
-      new BehaviorSubject<SearchParamsInterface>(this.defaultStates.defaultSearchParams);
+  public searchParams: BehaviorSubject<RequestBodyInterface> =
+      new BehaviorSubject<RequestBodyInterface>(this.defaultStates.defaultSearchParams);
 
-  public filtersList: BehaviorSubject<Array<FilterSampleInterface>> =
-      new BehaviorSubject<Array<FilterSampleInterface>>(this.defaultStates.defaultFiltersList);
+  public filtersList: BehaviorSubject<Array<FilterInterface>> =
+      new BehaviorSubject<Array<FilterInterface>>(this.defaultStates.defaultFiltersList);
 
-  public singleStudy: BehaviorSubject<Study> =
-      new BehaviorSubject<Study>(this.defaultStates.defaultSingleStudy);
+  public singleStudy: BehaviorSubject<ResourceInterface> =
+      new BehaviorSubject<ResourceInterface>(this.defaultStates.defaultSingleStudy);
 
   public activeSession: BehaviorSubject<SessionDataInterface> =
       new BehaviorSubject<SessionDataInterface>(this.defaultStates.defaultActiveSession);

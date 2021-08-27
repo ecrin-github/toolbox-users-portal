@@ -1,38 +1,26 @@
 import {Injectable} from '@angular/core';
-import {SearchParamsInterface} from '../../interfaces/search-params/search-params.interface';
 import {QueryApiService} from '../query-api/query-api.service';
-import {QueryBuilderService} from '../query-api/query-builder.service';
+import {RequestBodyInterface} from '../../interfaces/requests/request-body.interface';
 
 
 @Injectable({providedIn: 'root'})
 export class PaginationService {
 
     constructor(
-        private queryBuilderService: QueryBuilderService,
         private queryApiService: QueryApiService
     ) {
     }
 
 
-    pagination(searchParams: SearchParamsInterface) {
+    pagination(searchParams: RequestBodyInterface) {
 
-        if (searchParams.searchType === 'study_characteristics') {
+        if (searchParams.searchType.name !== null && searchParams.searchType.name !== undefined) {
 
-            return this.queryApiService.getByStudyCharacteristics(
-                this.queryBuilderService.studyCharacteristicsBuilder(searchParams)
-            );
+            if (searchParams.searchValue !== null && searchParams.searchValue !== undefined) {
 
-        } else if (searchParams.searchType === 'specific_study') {
+                return this.queryApiService.getResources(searchParams);
 
-            return this.queryApiService.getSpecificStudy(
-                this.queryBuilderService.specificStudyBuilder(searchParams)
-            );
-
-        } else if (searchParams.searchType === 'via_published_paper') {
-
-            return this.queryApiService.getViaPublishedPaper(
-                this.queryBuilderService.viaPublishedPaperBuilder(searchParams)
-            );
+            }
 
         } else {
             return null;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-import { Study } from '../../interfaces/entities/study.interface';
+import { ResourceInterface } from '../../interfaces/entities/resource.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -10,13 +10,14 @@ export class PdfService {
   constructor() {
   }
 
-  multipleStudiesPDFGenerator(data: Array<Study>) {
+  multipleResourcesPDFGenerator(data: Array<ResourceInterface>) {
 
     const doc = new jsPDF();
-    let bodyData: Array<any> = [];
     const fileName = 'Studies list - ' + Date.now().toString();
 
-    data.forEach((study, index) => {
+    // let bodyData: Array<any> = [];
+
+    /*data.forEach((study, index) => {
       bodyData.push([{content: study.displayTitle, colSpan: 4, rowSpan: 1,
         styles: {halign: 'left', fontStyle: 'bold', fontSize: 16}}]);
 
@@ -70,15 +71,16 @@ export class PdfService {
       }
       bodyData = [];
     });
+    */
 
     doc.save(fileName + '.pdf');
   }
 
 
-  singleStudyPDFGenerator(studyData: Study){
+  singleResourcePDFGenerator(resourceData: ResourceInterface){
     const doc = new jsPDF();
 
-    const bodyData: Array<any> = [];
+    /*const bodyData: Array<any> = [];
 
     bodyData.push([{content: studyData.displayTitle, colSpan: 4, rowSpan: 1,
       styles: {halign: 'left', fontStyle: 'bold', fontSize: 16}}]);
@@ -137,7 +139,9 @@ export class PdfService {
       theme: 'grid',
       body: bodyData,
     });
-    doc.save(studyData.displayTitle + '.pdf');
+    */
+
+    doc.save(resourceData.resource_file + '.pdf');
   }
 
 }

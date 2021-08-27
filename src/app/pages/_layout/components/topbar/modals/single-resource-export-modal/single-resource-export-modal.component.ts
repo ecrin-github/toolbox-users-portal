@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {PdfService} from '../../../../../../_mdr/core/services/portal/pdf.service';
-import {StatesService} from '../../../../../../_mdr/core/services/state/states.service';
+import {PdfService} from '../../../../../../_portal/core/services/portal/pdf.service';
+import {StatesService} from '../../../../../../_portal/core/services/state/states.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FileSaverService} from 'ngx-filesaver';
-import {SnackbarService} from '../../../../../../_mdr/core/services/snackbar/snackbar.service';
+import {SnackbarService} from '../../../../../../_portal/core/services/snackbar/snackbar.service';
 
 
 @Component({
-  selector: 'app-single-study-export-modal',
+  selector: 'app-single-resource-export-modal',
   templateUrl: './single-study-export-modal.component.html',
 })
-export class SingleStudyExportModalComponent implements OnInit {
+export class SingleResourceExportModalComponent implements OnInit {
 
   constructor(
     private pdfService: PdfService,

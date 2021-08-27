@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment.prod';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { LayoutService } from '../../../../../_mdr/core';
+import { LayoutService } from '../../../../../_portal/core';
 
 
 @Component({

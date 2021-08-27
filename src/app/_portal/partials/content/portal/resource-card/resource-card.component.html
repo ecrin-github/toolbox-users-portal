@@ -4,14 +4,14 @@
     <mat-card class="example-card">
       <mat-card-header>
         <mat-card-title>
-          <a [routerLink]="['/study', studyId]" target="_blank">
-            {{studyTitle}}
+          <a [routerLink]="['/resource', id]" target="_blank">
+            {{resourceTitle}}
           </a>
         </mat-card-title>
         <mat-card-subtitle
-          *ngIf="provenance !== null && provenance !== undefined"
+          *ngIf="doi !== null && doi !== undefined"
         >
-          {{provenance}}
+          {{doi}}
         </mat-card-subtitle>
       </mat-card-header>
       <mat-divider></mat-divider>
@@ -20,10 +20,10 @@
            class="mt-5 mb-1 mr-5 ml-5"
            align="justify"
            style="font-size: 1.1em !important;"
-           *ngIf="studyDescription !== null && studyDescription !== undefined"
+           *ngIf="description !== null && description !== undefined"
         >
           <!--<strong>{{'SEARCH-PAGE.STUDY.DESCRIPTION' | translate: {Default: 'Study description'} }}</strong><br />-->
-          {{(showMore) ? studyDescription : studyDescription | slice:0:150}} <span *ngIf="!showMore"> ...</span>
+          {{(showMore) ? description : description | slice:0:150}} <span *ngIf="!showMore"> ...</span>
           <a href="javascript:;" *ngIf="!showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
           <a href="javascript:;" *ngIf="showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
         </p>

@@ -1,7 +1,7 @@
-import { Study } from '../entities/study.interface';
 import {BaseResponseInterface} from './base-response.interface';
+import {ResourceInterface} from '../entities/resource.interface';
 
 
 export interface ResponseInterface extends BaseResponseInterface {
-  data: Array<Study> | [];
+  data: Array<ResourceInterface> | [];
 }

@@ -1,8 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Study} from '../../_mdr/core/interfaces/entities/study.interface';
-import {StatesService} from '../../_mdr/core/services/state/states.service';
-import {QueryApiService} from '../../_mdr/core/services/query-api/query-api.service';
+import {ResourceInterface} from '../../_portal/core/interfaces/entities/resource.interface';
 
 
 
@@ -10,17 +8,17 @@ import {QueryApiService} from '../../_mdr/core/services/query-api/query-api.serv
   templateUrl: './study-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudyPageComponent implements OnInit {
+export class ResourcePageComponent implements OnInit {
 
   public studyId: number;
 
-  public study: Study;
+  public resource: ResourceInterface;
 
   constructor(
     private route: Router,
     private activeRoute: ActivatedRoute,
-    private queryApiService: QueryApiService,
-    private statesService: StatesService,
+    // private queryApiService: QueryApiService,
+    // private statesService: StatesService,
     private ref: ChangeDetectorRef,
   ) {
     ref.detach();
@@ -29,8 +27,8 @@ export class StudyPageComponent implements OnInit {
         this.studyId = +params['id'];
       }
     );
-    this.queryApiService.getByStudyId({studyId: this.studyId}).subscribe(data => {
-        this.study = data[0];
+    /*this.queryApiService.getByStudyId({studyId: this.studyId}).subscribe(data => {
+        this.resource = data[0];
         this.statesService.singleStudy = data[0];
       },
       error => {
@@ -40,7 +38,7 @@ export class StudyPageComponent implements OnInit {
       if (!this.ref['destroyed']) {
         this.ref.detectChanges();
       }
-    }, 1);
+    }, 1);*/
   }
 
   ngOnInit(): void {}

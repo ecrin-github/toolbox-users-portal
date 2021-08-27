@@ -1,12 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {States} from '../../../../core/states/states';
-import {StudyFilters} from '../../../../core/filters/study.filters';
-import {DataObjectFilters} from '../../../../core/filters/object.filters';
 import {StatesService} from '../../../../core/services/state/states.service';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
-import {FilterSampleInterface} from '../../../../core/interfaces/filters/filter-sample.interface';
-import {StudyFiltersGroupsInterface} from '../../../../core/interfaces/filters/study-filters.interface';
-import {DataObjectFiltersGroupsInterface} from '../../../../core/interfaces/filters/object-filters.interface';
+import {FilterInterface} from '../../../../core/interfaces/filters/filter.interface';
 
 
 @Component({
@@ -15,9 +11,7 @@ import {DataObjectFiltersGroupsInterface} from '../../../../core/interfaces/filt
 })
 @Injectable({providedIn: 'root'})
 export class FiltersListComponent implements OnInit {
-  filtersList: Array<FilterSampleInterface>;
-  studyFilters: Array<StudyFiltersGroupsInterface> = StudyFilters;
-  dataObjectFilters: Array<DataObjectFiltersGroupsInterface> = DataObjectFilters;
+  filtersList: Array<FilterInterface>;
 
   constructor(
     private states: States,
@@ -30,21 +24,7 @@ export class FiltersListComponent implements OnInit {
 
     this.statesService.clearFilters();
 
-    this.studyFilters.forEach((filter) => {
-      filter.subgroups.forEach((subgroup: any) => {
-        subgroup.values.forEach((param: any) => {
-          param.isSelected = true;
-        });
-      });
-    });
-
-    this.dataObjectFilters.forEach((filter) => {
-      filter.subgroups.forEach((subgroup: any) => {
-        subgroup.values.forEach((param: any) => {
-          param.isSelected = true;
-        });
-      });
-    });
+    // EXTRA FUNCTIONALITY HERE //
 
     this.filtersList = [];
     this.states.filtersList.next(this.filtersList);

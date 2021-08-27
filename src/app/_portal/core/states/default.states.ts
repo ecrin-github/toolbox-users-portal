@@ -1,7 +1,7 @@
-import {Study} from '../interfaces/entities/study.interface';
+import {ResourceInterface} from '../interfaces/entities/resource.interface';
 import {Injectable} from '@angular/core';
-import {SearchParamsInterface} from '../interfaces/search-params/search-params.interface';
 import {SessionDataInterface} from '../interfaces/states/session.interface';
+import {RequestBodyInterface} from '../interfaces/requests/request-body.interface';
 
 
 @Injectable({providedIn: 'root'})
@@ -10,18 +10,18 @@ export class DefaultStates {
   public defaultIsCleared = true;
   public defaultIsFiltered = false;
 
-  public defaultSearchParams: SearchParamsInterface = {
+  public defaultSearchParams: RequestBodyInterface = {
     searchType: null,
-    searchBody: null
+    searchValue: null
   };
 
   public defaultFiltersList = [];
 
-  public defaultSingleStudy: Study;
+  public defaultSingleStudy: ResourceInterface;
 
   public defaultActiveSession: SessionDataInterface = {
     searchType: null,
-    searchBody: null,
+    searchValue: null,
     filters: null
   };
 

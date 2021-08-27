@@ -11,17 +11,11 @@ import {StatesService} from '../../../../core/services/state/states.service';
 })
 export class SearchPanelComponent implements OnInit {
 
-  @ViewChild('titleContains') titleContains: any;
-  @ViewChild('topicIncludes') topicIncludes: any;
-  @ViewChild('specificStudyValue') specificStudyValue: any;
-  @ViewChild('viaPublishedPaperValue') viaPublishedPaperValue: any;
+  @ViewChild('searchValue') searchValue: any;
 
   @Output() search: EventEmitter<any> = new EventEmitter();
 
-  selectedOption = 'study_characteristics';
-  logicOperatorDefault = 'and';
-  specificStudySelectDefault = '11';
-  viaPublishedPaperSelectDefault = 'doi';
+  selectedOption = 'title';
 
   clearEventSubscription: Subscription;
   sessionUploadEvent: Subscription;
@@ -48,41 +42,18 @@ export class SearchPanelComponent implements OnInit {
   onSessionUpload() {
     const formData = this.statesService.activeSession;
 
-    if (formData.searchType === 'study_characteristics') {
-      if (this.titleContains !== null && this.titleContains !== undefined) {
-        this.titleContains.nativeElement.value = formData.searchBody['titleContains'];
-      }
-
-      if (this.topicIncludes !== null && this.topicIncludes !== undefined) {
-        this.topicIncludes.nativeElement.value = formData.searchBody['topicsInclude'];
-      }
-    } else if (formData.searchType === 'specific_study') {
-      if (this.specificStudyValue !== null && this.specificStudyValue !== undefined) {
-        this.specificStudyValue.nativeElement.value = formData.searchBody['searchValue'];
-      }
-    } else if (formData.searchType === 'via_published_paper') {
-      if (this.viaPublishedPaperValue !== null && this.viaPublishedPaperValue !== undefined) {
-        this.viaPublishedPaperValue.nativeElement.value = formData.searchBody['searchValue'];
+    if (formData.searchType !== null && formData.searchType !== undefined) {
+      if (formData.searchValue !== null && formData.searchValue !== undefined) {
+        if (formData.searchValue !== ''){
+          this.searchValue.nativeElement.value = formData.searchValue;
+        }
       }
     }
+
   }
 
   onClearSearchString() {
-    if (this.titleContains !== null && this.titleContains !== undefined) {
-      this.titleContains.nativeElement.value = '';
-    }
-
-    if (this.topicIncludes !== null && this.topicIncludes !== undefined) {
-      this.topicIncludes.nativeElement.value = '';
-    }
-
-    if (this.specificStudyValue !== null && this.specificStudyValue !== undefined) {
-      this.specificStudyValue.nativeElement.value = '';
-    }
-
-    if (this.viaPublishedPaperValue !== null && this.viaPublishedPaperValue !== undefined) {
-      this.viaPublishedPaperValue.nativeElement.value = '';
-    }
+    this.searchValue.nativeElement.value = '';
   }
 
   onChangeSelectMode(value: string){
