@@ -8,7 +8,6 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { environment } from 'src/environments/environment';
 // Highlight JS
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { SplashScreenModule } from './_portal/partials/layout/splash-screen/splash-screen.module';
@@ -17,6 +16,7 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomPaginator} from './_portal/configs/paginator.config';
 import {FileSaverModule} from 'ngx-filesaver';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -35,6 +35,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     InlineSVGModule.forRoot(),
     NgbModule,
     FileSaverModule,
+    ReactiveFormsModule, // Add if needed
+    FormsModule,     // Add if needed
   ],
   providers: [
     {provide: MatPaginatorIntl, useClass: CustomPaginator},
@@ -52,5 +54,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     },
   ],
   bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }

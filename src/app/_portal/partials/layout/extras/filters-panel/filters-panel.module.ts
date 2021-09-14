@@ -1,24 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FiltersPanelComponent } from './filters-panel.component';
-import { StudyFiltersComponent } from './study-filters/study-filters.component';
-import { ObjectFiltersComponent } from './object-filters/object-filters.component';
 import {MatDividerModule} from '@angular/material/divider';
 import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {RouterModule} from '@angular/router';
+import {CategoriesComponent} from './categories/categories.component';
+
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
+import {SubcategoriesComponent} from './subcategories/subcategories.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
   declarations: [
     FiltersPanelComponent,
-    StudyFiltersComponent,
-    ObjectFiltersComponent
+    CategoriesComponent,
+    SubcategoriesComponent,
   ],
     imports: [
         CommonModule,
@@ -31,11 +35,15 @@ import {RouterModule} from '@angular/router';
         MatSnackBarModule,
         PerfectScrollbarModule,
         RouterModule,
+        MatTreeModule,
+        MatIconModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
     ],
   exports: [
     FiltersPanelComponent,
-    StudyFiltersComponent,
-    ObjectFiltersComponent
+    CategoriesComponent,
+    SubcategoriesComponent,
   ],
 })
 export class FiltersPanelModule { }

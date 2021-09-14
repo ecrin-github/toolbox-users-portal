@@ -6,10 +6,14 @@ import {PageEvent} from '@angular/material/paginator';
 import {Observable, Subscription} from 'rxjs';
 import {FiltersListComponent} from './filters-list/filters-list.component';
 import {ResponseInterface} from '../../../core/interfaces/responses/server-response.interface';
-import {Study} from '../../../core/interfaces/entities/study.interface';
+import {ResourceInterface} from '../../../core/interfaces/entities/resource.interface';
 import {SnackbarService} from '../../../core/services/snackbar/snackbar.service';
 import {QueryApiService} from '../../../core/services/query-api/query-api.service';
 import {PaginationService} from '../../../core/services/pagination/pagination.service';
+import {RequestBodyInterface, SearchTypeInterface} from '../../../core/interfaces/requests/request-body.interface';
+import {SearchService} from '../../../core/services/portal/search.service';
+import {SearchOptionsInterface} from '../../../core/interfaces/search/search-options.interface';
+import {FiltersBuilderService} from '../../../core/services/filters-builder/filters-builder.service';
 
 
 @Component({
@@ -24,21 +28,22 @@ export class MainPageContentComponent implements OnInit {
   public loading: boolean;
 
   public total: number;
-  public onPage: number;
-  public startFrom: number;
+  public startOnPage: number;
+  public endOnPage: number;
 
   public pageSize: number;
   public pageIndex: number;
   public pageSizeOptions = [5, 10, 15, 20];
-  public pageSlice: Array<Study> = [];
+  public pageSlice: Array<ResourceInterface> = [];
 
-  public searchType: string;
-  public searchBody: object;
+  public searchOptions: Array<SearchOptionsInterface>;
+  public requestBody: RequestBodyInterface;
+  public searchType: SearchTypeInterface;
+  public searchValue: string;
 
   clearEventSubscription: Subscription;
   isFilteredEventSubscription: Subscription;
   clearFilterEventSubscription: Subscription;
-  sessionDataUploadingEventSubscription: Subscription;
 
   constructor(
     private route: Router,
@@ -49,6 +54,8 @@ export class MainPageContentComponent implements OnInit {
     private queryApiService: QueryApiService,
     private filtersListComponent: FiltersListComponent,
     private paginationService: PaginationService,
+    private searchService: SearchService,
+    private filtersBuilder: FiltersBuilderService
   ) {
     ref.detach();
     this.clearEventSubscription = this.subscriptionEvents.getClearEventSubject().subscribe(() => {
@@ -61,9 +68,6 @@ export class MainPageContentComponent implements OnInit {
       if (!this.statesService.isCleared) {
         this.onClearFiltersListener();
       }
-    });
-    this.sessionDataUploadingEventSubscription = this.subscriptionEvents.getSessionUploadingEvent().subscribe(() => {
-      this.onUploadingSession();
     });
     setInterval(() => {
       if (!this.ref['destroyed']) {
@@ -92,8 +96,8 @@ export class MainPageContentComponent implements OnInit {
         (data: ResponseInterface) => {
           this.pageSlice = data.data;
           this.total = data.total;
-          this.onPage = this.paginationService.onPageChecker(this.total, this.pageIndex, this.pageSize);
-          this.startFrom = this.paginationService.startFromChecker(this.onPage, this.pageSize);
+          this.endOnPage = this.paginationService.endOnPageChecker(this.total, this.pageIndex, this.pageSize);
+          this.startOnPage = this.paginationService.startOnPageChecker(this.total, this.pageIndex, this.pageSize);
           this.loading = false;
         },
         error => {
@@ -101,32 +105,6 @@ export class MainPageContentComponent implements OnInit {
         }
       );
     }
-  }
-
-  onUploadingSession() {
-    const searchStateData = this.statesService.activeSession;
-
-    this.statesService.isCleared = false;
-
-    this.searchType = searchStateData.searchType;
-    this.searchBody = searchStateData.searchBody;
-
-    this.pageSize = searchStateData.searchBody['size'];
-    this.pageIndex = searchStateData.searchBody['page'];
-
-    if (this.statesService.filtersList.length > 0) {
-      this.statesService.isFiltered = true;
-    } else {
-      this.statesService.isFiltered  = false;
-    }
-
-    this.statesService.searchParams = {searchType: this.searchType, searchBody: this.searchBody};
-
-    this.showSearchResults(this.paginationService.pagination({
-      searchType: this.searchType,
-      searchBody: this.searchBody
-    }));
-
   }
 
   onSearch($event: any){
@@ -140,41 +118,21 @@ export class MainPageContentComponent implements OnInit {
     this.loading = true;
 
     if (!this.statesService.isCleared) {
-      if (this.searchType === 'study_characteristics') {
 
-        this.searchBody = {
-          page: this.pageIndex,
-          size: this.pageSize,
-          titleContains: $event[1]['viewModel'],
-          logicalOperator: $event[2]['model'],
-          topicsInclude: $event[3]['viewModel']
-        };
+      this.searchType = this.searchOptions.find(x => x.propertyName === $event[0]['viewModel']);
+      this.searchValue = $event[1]['viewModel'];
 
-      } else if (this.searchType === 'specific_study') {
-
-        this.searchBody = {
-          searchType: parseInt($event[1]['model'], 10),
-          searchValue: $event[2]['viewModel'],
-          page: this.pageIndex,
-          size: this.pageSize,
-        };
-
-      } else if (this.searchType === 'via_published_paper') {
-
-        this.searchBody = {
-          searchType: $event[1]['model'],
-          searchValue: $event[2]['viewModel'],
-          page: this.pageIndex,
-          size: this.pageSize,
-        };
-      }
-
-      this.statesService.searchParams = {searchType: this.searchType, searchBody: this.searchBody};
-
-      this.showSearchResults(this.paginationService.pagination({
+      this.requestBody = {
+        page: this.pageIndex + 1,
+        size: this.pageSize,
         searchType: this.searchType,
-        searchBody: this.searchBody
-      }));
+        searchValue: this.searchValue.trim(),
+        filters: this.filtersBuilder.filtersBuilder()
+      };
+
+      this.statesService.searchParams = this.requestBody;
+
+      this.showSearchResults(this.paginationService.pagination(this.requestBody));
 
     } else {
 
@@ -184,10 +142,9 @@ export class MainPageContentComponent implements OnInit {
 
       this.snackbarService.snackbarTranslateMessage('SNACKBAR.SEARCH.ERROR-MESSAGE',
           'SNACKBAR.CLOSE');
-
     }
 
-    if (this.searchBody === null || this.searchBody === undefined) {
+    if (this.searchValue === null || this.searchValue === undefined) {
 
       this.onClearBeforeSearch();
       this.pageIndex = 0;
@@ -206,28 +163,36 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.isCleared) {
 
-      this.searchBody['page'] = this.pageIndex;
-      this.searchBody['size'] = this.pageSize;
-
-      this.showSearchResults(this.paginationService.pagination({
+      this.requestBody = {
+        page: this.pageIndex + 1,
+        size: this.pageSize,
         searchType: this.searchType,
-        searchBody: this.searchBody
-      }));
+        searchValue: this.searchValue.trim(),
+        filters: this.filtersBuilder.filtersBuilder()
+      };
+
+      this.showSearchResults(this.paginationService.pagination(this.requestBody));
 
     }
   }
 
   onClearFiltersListener(){
 
+    this.statesService.filtersList = [];
     this.statesService.isFiltered = false;
     this.pageIndex = 0;
     this.pageSize = 10;
 
+    this.requestBody = {
+      page: this.pageIndex + 1,
+      size: this.pageSize,
+      searchType: this.searchType,
+      searchValue: this.searchValue.trim(),
+      filters: this.filtersBuilder.filtersBuilder()
+    };
+
     if (!this.statesService.isCleared) {
-      this.showSearchResults(this.paginationService.pagination({
-        searchType: this.searchType,
-        searchBody: this.searchBody
-      }));
+      this.showSearchResults(this.paginationService.pagination(this.requestBody));
     }
   }
 
@@ -240,7 +205,7 @@ export class MainPageContentComponent implements OnInit {
     this.pageSlice = [];
     this.total = undefined;
     this.searchType = null;
-    this.searchBody = null;
+    this.requestBody = null;
   }
 
 
@@ -250,6 +215,7 @@ export class MainPageContentComponent implements OnInit {
 
     this.statesService.isCleared = true;
     this.statesService.isFiltered = false;
+    this.statesService.filtersList = [];
 
     this.statesService.clearFilters();
     this.filtersListComponent.clearAll();
@@ -263,18 +229,24 @@ export class MainPageContentComponent implements OnInit {
 
     if (!this.statesService.isCleared) {
 
-      this.searchBody['page'] = this.pageIndex;
-      this.searchBody['size'] = this.pageSize;
-
-      this.showSearchResults(this.paginationService.pagination({
+      this.requestBody = {
+        page: this.pageIndex + 1,
+        size: this.pageSize,
         searchType: this.searchType,
-        searchBody: this.searchBody
-      }));
+        searchValue: this.searchValue.trim(),
+        filters: this.filtersBuilder.filtersBuilder()
+      };
+
+      this.showSearchResults(this.paginationService.pagination(this.requestBody));
 
     }
   }
 
   ngOnInit(): void {
     this.setInitialSearchParams();
+    // set search options
+    this.searchService.getSearchOptions().subscribe(data => {
+      this.searchOptions = data;
+    });
   }
 }

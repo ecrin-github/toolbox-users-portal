@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {States} from '../../states/states';
 import {DefaultStates} from '../../states/default.states';
-import {SessionDataInterface, SessionRecordInterface} from '../../interfaces/states/session.interface';
 import {RequestBodyInterface} from '../../interfaces/requests/request-body.interface';
-import {FilterInterface} from '../../interfaces/filters/filter.interface';
+import {FilterGroupInterface, FilterInterface} from '../../interfaces/filters/filter.interface';
 import {ResourceInterface} from '../../interfaces/entities/resource.interface';
 
 
@@ -50,10 +49,7 @@ export class StatesService {
   }
 
   set searchParams(value: RequestBodyInterface) {
-    this.states.searchParams.next({
-      searchType: value.searchType,
-      searchValue: value.searchValue
-    });
+    this.states.searchParams.next(value);
   }
 
   setDefaultSearchParams() {
@@ -75,58 +71,31 @@ export class StatesService {
   }
 
 
-  // Single Study
-  get singleStudy() {
-    return this.states.singleStudy.getValue();
+  // Single Resource
+  get singleResource() {
+    return this.states.singleResource.getValue();
   }
 
-  set singleStudy(resource: ResourceInterface) {
-    this.states.singleStudy.next(resource);
+  set singleResource(resource: ResourceInterface) {
+    this.states.singleResource.next(resource);
   }
 
-  setDefaultSingleStudy() {
-    this.singleStudy = this.defaultStates.defaultSingleStudy;
-  }
-
-
-  // SessionsList
-  get sessionsList() {
-    return this.states.sessionsList.getValue();
-  }
-
-  set sessionsList(sessionsList: Array<SessionRecordInterface>) {
-    this.states.sessionsList.next(sessionsList);
-  }
-
-  appendToSessionsList(sessionRecord: SessionRecordInterface) {
-    const values = this.sessionsList;
-    values.push(sessionRecord);
-    this.states.sessionsList.next(values);
-  }
-
-  getSessionDataFromSessionsList(id: number): SessionRecordInterface{
-    if (this.sessionsList.length > 0) {
-      return this.states.sessionsList.getValue().find(x => x.id === id);
-    }
-    return null;
-  }
-
-  setDefaultSessionsList() {
-    this.sessionsList = this.defaultStates.defaultSessionsList;
+  setDefaultSingleResource() {
+    this.singleResource = this.defaultStates.defaultSingleResource;
   }
 
 
-  // Active search session
-  get activeSession(): SessionDataInterface {
-    return this.states.activeSession.getValue();
+  // Categories
+  get categoriesList() {
+    return this.states.categoriesList.getValue();
   }
 
-  set activeSession(value: SessionDataInterface) {
-    this.states.activeSession.next(value);
+  set categoriesList(categories: Array<FilterGroupInterface>) {
+    this.states.categoriesList.next(categories);
   }
 
-  setDefaultActiveSession() {
-    this.activeSession = this.defaultStates.defaultActiveSession;
+  setDefaultCategoriesList(){
+    this.states.categoriesList.next(this.defaultStates.defaultCategoriesList);
   }
 
 

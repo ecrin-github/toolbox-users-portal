@@ -1,8 +1,11 @@
+import {FiltersListInterface} from '../filters/filter.interface';
+
 export interface SearchTypeInterface {
     id: number;
     name: string;
     appName: string;
     modelName: string;
+    propertyName: string;
 }
 
 export interface RequestBodyInterface {
@@ -10,5 +13,5 @@ export interface RequestBodyInterface {
     size?: number;
     searchType: SearchTypeInterface;
     searchValue: string;
-    filters?: Array<object>;
+    filters?: FiltersListInterface;
 }

@@ -11,34 +11,40 @@ export class PaginationService {
     ) {
     }
 
-
     pagination(searchParams: RequestBodyInterface) {
-
         if (searchParams.searchType.name !== null && searchParams.searchType.name !== undefined) {
-
             if (searchParams.searchValue !== null && searchParams.searchValue !== undefined) {
-
                 return this.queryApiService.getResources(searchParams);
-
             }
-
         } else {
             return null;
         }
     }
 
-    onPageChecker(total: number, pageIndex: number, pageSize: number): number {
-        let onPage = pageSize * (pageIndex + 1);
-        if (total < onPage) {
-            onPage = total;
+    endOnPageChecker(total: number, pageIndex: number, pageSize: number): number {
+        let endOnPage = pageSize * (pageIndex + 1);
+        if (total < endOnPage) {
+            endOnPage = total;
         }
-        return onPage;
+        return endOnPage;
     }
 
-    startFromChecker(onPage: number, pageSize: number): number {
-        let startFrom = onPage - pageSize + 1;
-        if (startFrom < 0) {
-            startFrom = 1;
+    lastPageChecker(total: number, pageSize: number, page: number) {
+        return (pageSize * page) > total;
+    }
+
+    startOnPageChecker(total: number, pageIndex: number, pageSize: number): number {
+        let startFrom = 1;
+        const currentPage = pageIndex + 1;
+        if (pageIndex !== 0) {
+            if (this.lastPageChecker(total, pageSize, currentPage)) {
+                startFrom = currentPage * pageSize;
+                if ((startFrom - total) > 1) {
+                    startFrom = (startFrom + 1) - pageSize;
+                }
+            } else {
+                startFrom = pageIndex * pageSize + 1;
+            }
         }
         return startFrom;
     }

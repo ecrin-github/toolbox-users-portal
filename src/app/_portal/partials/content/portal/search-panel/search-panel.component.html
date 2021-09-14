@@ -4,7 +4,7 @@
       <div class="card-body">
         <form #searchForm='ngForm' (ngSubmit)="onSearch(searchForm)">
           <div class="row" style="margin-top: 15px !important;">
-            <div class="col-xl-3">
+            <div class="col-xl-2">
               <div class="form-group">
                 <select name="selectMode" class="form-control"
                         style="margin-left: 3px !important; border-color: #d9d9d9 !important;"
@@ -13,24 +13,20 @@
                         [(ngModel)]="selectedOption"
                         (change)="onChangeSelectMode(selectMode.value)"
                 >
-                  <option value="title" [translate]="'Title'">
-                    Title
-                  </option>
-                  <option value="doi" [translate]="'DOI'">
-                    DOI
-                  </option>
+                  <option value="" selected disabled>Select an option...</option>
+                  <option *ngFor="let option of searchOptions" value="{{option.propertyName}}">{{option.name}}</option>
                 </select>
               </div>
             </div>
 
 
             <!-- Search value of the search form -->
-            <div class="col-xl-3">
+            <div class="col-xl-9">
               <div class="form-group">
                 <input type="text" class="form-control"
-                       name="titleContains" #searchValue
+                       name="searchValue" #searchValue
                        ngModel
-                       placeholder="{{'SEARCH-PANEL.STUDY-CHARACTERISTICS.TITLE-CONTAINS' | translate}}"
+                       placeholder="Input something to start searching..."
                        style="border-color: #d9d9d9 !important;"
                 />
               </div>
@@ -55,7 +51,7 @@
                 ngbTooltip="{{'TOOLTIPS.HELP-PAGE' | translate}}"
                 class="fa fa-question-circle"
                 style="position: absolute; top: 8px;
-                right: 16px; font-size: 18px; color: #315492;"></a>
+                right: 16px; font-size: 18px; color: #3699FF;"></a>
             </div>
           </div>
         </form>

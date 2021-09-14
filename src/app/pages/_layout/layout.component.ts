@@ -5,7 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
 } from '@angular/core';
-import { LayoutService, LayoutInitService } from '../../_mdr/core';
+import { LayoutService, LayoutInitService } from '../../_portal/core';
 import KTLayoutContent from '../../../assets/js/layout/base/content';
 
 @Component({

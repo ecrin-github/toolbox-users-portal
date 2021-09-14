@@ -9,7 +9,8 @@ export class ResourceCardComponent implements OnInit {
   @Input() id: number;
   @Input() resourceTitle: string;
   @Input() doi: string;
-  @Input() description: string;
+  @Input() abstract: string;
+  @Input() authors: string;
 
   public showMore: boolean;
 

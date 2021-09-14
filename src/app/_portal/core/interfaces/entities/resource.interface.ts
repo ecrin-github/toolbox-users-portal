@@ -15,10 +15,10 @@ export interface ResourceInterface {
     year_of_publication: number;
     doi: string;
     language: string;
-    type_of_resource: TypeOfResourceInterface;
+    type_of_resource: TypeOfResourceInterface | null;
     url: string;
     resource_file: string;
-    tags: TagsInterface;
+    tags: TagsInterface | null;
     created: string;
     updated: string;
 }

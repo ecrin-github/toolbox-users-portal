@@ -1,35 +1,43 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ResourceInterface} from '../../_portal/core/interfaces/entities/resource.interface';
-
+import {StatesService} from '../../_portal/core/services/state/states.service';
+import {QueryApiService} from '../../_portal/core/services/query-api/query-api.service';
 
 
 @Component({
-  templateUrl: './study-page.component.html',
+  templateUrl: './resource-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResourcePageComponent implements OnInit {
 
-  public studyId: number;
+  public resourceId: number;
+  public isLoading: boolean;
 
   public resource: ResourceInterface;
 
   constructor(
     private route: Router,
     private activeRoute: ActivatedRoute,
-    // private queryApiService: QueryApiService,
-    // private statesService: StatesService,
+    private queryApiService: QueryApiService,
+    private statesService: StatesService,
     private ref: ChangeDetectorRef,
   ) {
     ref.detach();
     this.activeRoute.params.subscribe(
       (params: Params) => {
-        this.studyId = +params['id'];
+        this.resourceId = +params['id'];
       }
     );
-    /*this.queryApiService.getByStudyId({studyId: this.studyId}).subscribe(data => {
-        this.resource = data[0];
-        this.statesService.singleStudy = data[0];
+    this.isLoading = true;
+    this.queryApiService.getByResourceId({id: this.resourceId}).subscribe(data => {
+        if (data !== null && data !== undefined && Object.keys(data).length > 0) {
+          this.resource = data;
+          this.statesService.singleResource = data;
+        } else {
+          this.resource = null;
+        }
+        this.isLoading = false;
       },
       error => {
         this.route.navigate(['error/not-found']);
@@ -38,9 +46,10 @@ export class ResourcePageComponent implements OnInit {
       if (!this.ref['destroyed']) {
         this.ref.detectChanges();
       }
-    }, 1);*/
+    }, 1);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
 }

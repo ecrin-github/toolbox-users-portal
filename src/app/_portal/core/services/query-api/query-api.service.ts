@@ -12,7 +12,7 @@ export class QueryApiService {
 
   baseUrlApi: string = environment.hostname + environment.apiBaseUrl + environment.apiVersion;
 
-  private searchQueryUrl = this.baseUrlApi + environment.searchQueryUrl;
+  private searchQueryUrl = this.baseUrlApi + environment.searchApiUrl;
   private selectedResourceApiUrl = this.baseUrlApi + environment.resourceIdUrl;
 
   constructor(
@@ -24,7 +24,7 @@ export class QueryApiService {
     return this.http.post<ResponseInterface>(this.searchQueryUrl, searchParams);
   }
 
-  getByStudyId(searchParams: ResourceRequestInterface){
+  getByResourceId(searchParams: ResourceRequestInterface){
     return this.http.post<ResourceInterface>(this.selectedResourceApiUrl, searchParams);
   }
 

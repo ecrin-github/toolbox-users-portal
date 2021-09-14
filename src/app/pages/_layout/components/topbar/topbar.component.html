@@ -1,32 +1,32 @@
 <!--begin::Topbar-->
 
 <ng-container *ngIf="router.url === '/'">
+
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-cloud-upload-alt"
-         style="font-size: 1.35em;"
-         placement="bottom" ngbTooltip="{{'MODALS.LOAD' | translate: {Default: 'Load'} }}"
-         (click)="openLoadModal()"
-      ></a>
+      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-pdf"
+         placement="bottom" ngbTooltip="Save as PDF"
+         (click)="generatePdfBtn.click()"
+         style="font-size: 1.35em; color: #3699FF;"></a>
+      <input
+        hidden
+        type="button"
+        #generatePdfBtn
+        (click)="generatePdf()" />
     </div>
   </div>
 
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-save"
-         placement="bottom" ngbTooltip="{{'MODALS.SAVE' | translate: {Default: 'Save'} }}"
-         id="downloadStoreBtn"
-         (click)="openSaveModal()"
-         style="font-size: 1.35em;"></a>
-    </div>
-  </div>
-
-  <div class="topbar-item">
-    <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-download"
-         placement="bottom" ngbTooltip="{{'MODALS.EXPORT-AS' | translate: {Default: 'Export as'} }}"
-         (click)="openExportModal()"
-         style="font-size: 1.35em;"></a>
+      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-code"
+         placement="bottom" ngbTooltip="Save as JSON"
+         (click)="generateJSONBtn.click()"
+         style="font-size: 1.35em; color: #3699FF;"></a>
+      <input
+        hidden
+        type="button"
+        #generateJSONBtn
+        (click)="generateJson()" />
     </div>
   </div>
 
@@ -35,7 +35,7 @@
       <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-trash"
          placement="bottom" ngbTooltip="{{'TOOLTIPS.CLEAR' | translate}}"
          (click)="clearBtn.click()"
-         style="font-size: 1.35em; color: #bc3315;"></a>
+         style="font-size: 1.35em; color: #d0451b;"></a>
       <input
         hidden
         type="button"
@@ -46,30 +46,21 @@
 </ng-container>
 
 
-<ng-container *ngIf="(router.url !== '/' && !router.url.includes('/study')) || router.url.includes('/api')">
+<ng-container *ngIf="(router.url !== '/' && !router.url.includes('/resource')) || router.url.includes('/api')">
+
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-cloud-upload-alt"
-         style="font-size: 1.35em;"
-         placement="bottom" ngbTooltip="{{'MODALS.LOAD' | translate: {Default: 'Load'} }}"
-      ></a>
-
+      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-pdf"
+         placement="bottom" ngbTooltip="Save as PDF"
+         style="font-size: 1.35em; color: #3699FF;"></a>
     </div>
   </div>
 
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-save"
-         placement="bottom" ngbTooltip="{{'MODALS.SAVE' | translate: {Default: 'Save'} }}"
-         style="font-size: 1.35em;"></a>
-    </div>
-  </div>
-
-  <div class="topbar-item">
-    <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-download"
-         placement="bottom" ngbTooltip="{{'MODALS.EXPORT-AS' | translate: {Default: 'Export as'} }}"
-         style="font-size: 1.35em;"></a>
+      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-code"
+         placement="bottom" ngbTooltip="Save as JSON"
+         style="font-size: 1.35em; color: #3699FF;"></a>
     </div>
   </div>
 
@@ -77,46 +68,48 @@
     <div class="btn btn-icon btn-clean btn-lg mr-1">
       <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-trash"
          placement="bottom" ngbTooltip="{{'TOOLTIPS.CLEAR' | translate}}"
-         style="font-size: 1.35em; color: #bc3315;"></a>
+         style="font-size: 1.35em; color: #d0451b;"></a>
     </div>
   </div>
+
 </ng-container>
 
 
-<ng-container *ngIf="router.url.includes('/study') && !(router.url.includes('/api'))">
+<ng-container *ngIf="router.url.includes('/resource') && !(router.url.includes('/api'))">
+
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-cloud-upload-alt"
-         style="font-size: 1.35em;"
-         placement="bottom" ngbTooltip="{{'MODALS.LOAD' | translate: {Default: 'Load'} }}"
-      ></a>
+      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-pdf"
+         placement="bottom" ngbTooltip="Save as PDF"
+         (click)="generatePdfResourceBtn.click()"
+         style="font-size: 1.35em; color: #3699FF;"></a>
+      <input
+        hidden
+        type="button"
+        #generatePdfResourceBtn
+        (click)="generateResourcePdf()" />
     </div>
   </div>
 
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-save"
-         style="font-size: 1.35em;"
-         placement="bottom" ngbTooltip="{{'MODALS.SAVE' | translate: {Default: 'Save'} }}"
-      ></a>
-    </div>
-  </div>
-
-  <div class="topbar-item">
-    <div class="btn btn-icon btn-clean btn-lg mr-1">
-      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-download"
-         placement="bottom" ngbTooltip="{{'MODALS.EXPORT-AS' | translate: {Default: 'Export as'} }}"
-         (click)="openSingleStudyModal()"
-         style="font-size: 1.35em;"></a>
+      <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-file-code"
+         placement="bottom" ngbTooltip="Save as JSON"
+         (click)="generateJSONResourceBtn.click()"
+         style="font-size: 1.35em; color: #3699FF;"></a>
+      <input
+        hidden
+        type="button"
+        #generateJSONResourceBtn
+        (click)="generateResourceJson()" />
     </div>
   </div>
 
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1">
       <a class="svg-icon svg-icon-xl svg-icon-primary fas fa-trash"
-         style="font-size: 1.35em; color: #bc3315;"
          placement="bottom" ngbTooltip="{{'TOOLTIPS.CLEAR' | translate}}"
-      ></a>
+         style="font-size: 1.35em; color: #d0451b;"></a>
     </div>
   </div>
 </ng-container>

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
 import {
-  NgbDropdownModule,
-  NgbProgressbarModule, NgbTooltipModule,
+    NgbDropdownModule, NgbPopoverModule,
+    NgbProgressbarModule, NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { TranslationModule } from '../modules/i18n/translation.module';
 import { LayoutComponent } from './_layout/layout.component';
@@ -29,10 +29,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatListModule} from '@angular/material/list';
-import {ExportModalComponent} from './_layout/components/topbar/modals/export-modal/export-modal.component';
-import {SaveModalComponent} from './_layout/components/topbar/modals/save-modal/save-modal.component';
-import {LoadModalComponent} from './_layout/components/topbar/modals/load-modal/load-modal.component';
-import {SingleStudyExportModalComponent} from './_layout/components/topbar/modals/single-study-export-modal/single-study-export-modal.component';
 
 
 @NgModule({
@@ -46,46 +42,42 @@ import {SingleStudyExportModalComponent} from './_layout/components/topbar/modal
     TopbarComponent,
     LanguageSelectorComponent,
 
-    ExportModalComponent,
-    LoadModalComponent,
-    SaveModalComponent,
-    SingleStudyExportModalComponent,
-
     MainPageComponent,
     ResourcePageComponent,
   ],
-  imports: [
-    CommonModule,
-    TranslationModule,
-    InlineSVGModule,
-    ExtrasModule,
-    NgbDropdownModule,
-    NgbProgressbarModule,
-    CoreModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatIconModule,
-    NgbTooltipModule,
+    imports: [
+        CommonModule,
+        TranslationModule,
+        InlineSVGModule,
+        ExtrasModule,
+        NgbDropdownModule,
+        NgbProgressbarModule,
+        CoreModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatIconModule,
+        NgbTooltipModule,
 
-    FiltersPanelModule,
-    MainPageContentModule,
+        FiltersPanelModule,
+        MainPageContentModule,
 
-    RouterModule.forChild([
-      {
-        path: '',
-        component: MainPageComponent
-      },
-      {
-        path: 'resource/:id',
-        component: ResourcePageComponent
-      },
-    ]),
-    FormsModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatListModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: MainPageComponent
+            },
+            {
+                path: 'resource/:id',
+                component: ResourcePageComponent
+            },
+        ]),
+        FormsModule,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatListModule,
+        NgbPopoverModule,
 
-  ],
+    ],
 })
 export class MainModule { }

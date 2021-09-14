@@ -3,6 +3,8 @@ import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
 import {StatesService} from '../../../../core/services/state/states.service';
+import {SearchService} from '../../../../core/services/portal/search.service';
+import {SearchOptionsInterface} from '../../../../core/interfaces/search/search-options.interface';
 
 
 @Component({
@@ -15,22 +17,21 @@ export class SearchPanelComponent implements OnInit {
 
   @Output() search: EventEmitter<any> = new EventEmitter();
 
-  selectedOption = 'title';
+  selectedOption = 'resource__title';
 
   clearEventSubscription: Subscription;
-  sessionUploadEvent: Subscription;
+
+  searchOptions: Array<SearchOptionsInterface>;
 
   constructor(
     private statesService: StatesService,
     private subscriptionEvents: SubscriptionEvents,
+    private searchService: SearchService,
     private ref: ChangeDetectorRef,
   ) {
     ref.detach();
     this.clearEventSubscription = this.subscriptionEvents.getClearEventSubject().subscribe(() => {
       this.onClearSearchString();
-    });
-    this.sessionUploadEvent = this.subscriptionEvents.getSessionUploadingEvent().subscribe(() => {
-      this.onSessionUpload();
     });
     setInterval(() => {
       if (!this.ref['destroyed']) {
@@ -39,21 +40,10 @@ export class SearchPanelComponent implements OnInit {
     }, 1);
   }
 
-  onSessionUpload() {
-    const formData = this.statesService.activeSession;
-
-    if (formData.searchType !== null && formData.searchType !== undefined) {
-      if (formData.searchValue !== null && formData.searchValue !== undefined) {
-        if (formData.searchValue !== ''){
-          this.searchValue.nativeElement.value = formData.searchValue;
-        }
-      }
-    }
-
-  }
-
   onClearSearchString() {
-    this.searchValue.nativeElement.value = '';
+    if (this.searchValue !== undefined) {
+      this.searchValue.nativeElement.value = '';
+    }
   }
 
   onChangeSelectMode(value: string){
@@ -66,5 +56,8 @@ export class SearchPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.onClearSearchString();
+    this.searchService.getSearchOptions().subscribe(data => {
+      this.searchOptions = data;
+    });
   }
 }

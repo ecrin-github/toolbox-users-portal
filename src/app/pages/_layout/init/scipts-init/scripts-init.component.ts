@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { KTUtil } from '../../../../../assets/js/components/util';
 import KTLayoutStickyCard from '../../../../../assets/js/layout/base/sticky-card';
 import KTLayoutStretchedCard from '../../../../../assets/js/layout/base/stretched-card';
-import { LayoutService } from '../../../../_mdr/core';
+import { LayoutService } from '../../../../_portal/core';
 import KTLayoutBrand from '../../../../../assets/js/layout/base/brand';
 
 @Component({

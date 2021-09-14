@@ -19,10 +19,15 @@ interface GeographicalScopeInterface {
     countries_grouping: Array<string>;
 }
 
+interface DataTypeSub {
+    name: string;
+    description: string;
+}
+
 interface DataTypeInterface {
     name: string;
     description: string;
-    subs: Array<string>;
+    subs: Array<DataTypeSub>;
 }
 
 interface StageInDsInterface {

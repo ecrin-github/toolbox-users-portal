@@ -1,6 +1,5 @@
 import {ResourceInterface} from '../interfaces/entities/resource.interface';
 import {Injectable} from '@angular/core';
-import {SessionDataInterface} from '../interfaces/states/session.interface';
 import {RequestBodyInterface} from '../interfaces/requests/request-body.interface';
 
 
@@ -12,19 +11,14 @@ export class DefaultStates {
 
   public defaultSearchParams: RequestBodyInterface = {
     searchType: null,
-    searchValue: null
+    searchValue: null,
+    filters: null,
   };
+
+  public defaultCategoriesList = [];
 
   public defaultFiltersList = [];
 
-  public defaultSingleStudy: ResourceInterface;
-
-  public defaultActiveSession: SessionDataInterface = {
-    searchType: null,
-    searchValue: null,
-    filters: null
-  };
-
-  public defaultSessionsList = [];
+  public defaultSingleResource: ResourceInterface;
 
 }

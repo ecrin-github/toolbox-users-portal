@@ -1,0 +1,46 @@
+<div style="width: 97%;" class="pl-1 mt-1">
+  <mat-expansion-panel [expanded]="isExpandedProperty(name)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-divider></mat-divider> <br />
+
+    <ng-container *ngFor="let filter of filters">
+      <mat-checkbox id="{{filter.name + '_' + filter.id}}"
+                    name="{{filter.name}}"
+                    [(ngModel)]="filter.isSelected"
+                    [value]="filter.name"
+                    (change)="onCategoryFilter(
+              $event,
+              filter.name,
+              filter.id,
+              filter.modelPropertyName,
+              filter.resourcePropertyName,
+              filter.isSelected
+            )">
+        {{filter.name}}
+      </mat-checkbox>
+      <br />
+    </ng-container>
+
+    <mat-action-row>
+      <button mat-button color="primary"
+              (click)="selectAll(name)"
+              style="padding-right: 15px !important; padding-left: 10px !important;"
+      >
+        {{'BUTTONS.SELECT-ALL' | translate: {Default: 'Select all'} }}
+      </button>
+      <button mat-button color="warn"
+              (click)="deselectAll(name)"
+              style="padding-right: 15px !important; padding-left: 10px !important;"
+      >
+        {{'BUTTONS.DESELECT-ALL' | translate: {Default: 'Deselect all'} }}
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</div>
+<br />
+

@@ -6,9 +6,7 @@ import { NgbAlertModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
-import {DataObjectComponent} from './data-object/data-object.component';
-import {StudyCardComponent} from './study-card/study-card.component';
-import {StudyExpandingComponent} from './study-expanding/study-expanding.component';
+import {ResourceCardComponent} from './resource-card/resource-card.component';
 import {FiltersListComponent} from './filters-list/filters-list.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
@@ -22,9 +20,7 @@ import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
-    DataObjectComponent,
-    StudyCardComponent,
-    StudyExpandingComponent,
+    ResourceCardComponent,
     SearchPanelComponent,
     FiltersListComponent,
     MainPageContentComponent
@@ -46,9 +42,7 @@ import {FormsModule} from '@angular/forms';
     FormsModule,
   ],
   exports: [
-    DataObjectComponent,
-    StudyCardComponent,
-    StudyExpandingComponent,
+    ResourceCardComponent,
     SearchPanelComponent,
     FiltersListComponent,
     MainPageContentComponent

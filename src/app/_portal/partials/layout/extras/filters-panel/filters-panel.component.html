@@ -8,7 +8,8 @@
   <div
     class="offcanvas-header offcanvas-header-navs d-flex align-items-center justify-content-between mb-5"
   >
-    <ul
+    <h2 class="ml-4">Categories filtering</h2>
+    <!--<ul
       class="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-primary flex-grow-1 px-10"
       role="tablist"
     >
@@ -16,23 +17,13 @@
         <a
           class="nav-link cursor-pointer"
           data-toggle="tab"
-          [ngClass]="getActiveCSSClasses('studies_filters')"
-          (click)="setActiveTabId('studies_filters')"
-          >Studies</a
+          [ngClass]="getActiveCSSClasses('categories')"
+          (click)="setActiveTabId('categories')"
+          >Categories</a
         >
       </li>
 
-      <li class="nav-item">
-        <a
-          class="nav-link cursor-pointer"
-          data-toggle="tab"
-          [ngClass]="getActiveCSSClasses('objects_filters')"
-          (click)="setActiveTabId('objects_filters')"
-          >Data objects</a
-        >
-      </li>
-
-    </ul>
+    </ul>-->
     <div class="offcanvas-close mt-n1 pr-5">
       <a
         href="#"
@@ -46,64 +37,99 @@
   <!--end::Header-->
 
   <!--begin::Content-->
-  <div class="offcanvas-content px-10">
-    <div class="tab-content">
-      <!--begin::Tabpane-->
-      <div
-        class="tab-pane fade pt-3 pr-5 mr-n5"
-        id="studies_filters"
-        [ngClass]="getActiveCSSClasses('studies_filters')"
-        role="tabpanel"
-      >
-        <!--begin::Section-->
-        <div
-          [perfectScrollbar]="{ wheelPropagation: false }"
-          class="scroll mb-15"
-          [ngStyle]="{ height: '800px', position: 'relative' }"
-        >
+  <div class="offcanvas-content pl-3">
+    <div style="height: 5px; width: 100%"></div>
+    <div
+            [perfectScrollbar]="{ wheelPropagation: false }"
+            class="scroll mb-15 mt-5"
+            [ngStyle]="{ height: '800px', position: 'relative', width: '100%' }"
+    >
 
-          <ng-container *ngFor="let studyFilter of studyFilters">
-            <app-study-filters
-              [groupName]="studyFilter.translate | translate: {Default: studyFilter.groupName}"
-              [subgroups]="studyFilter.subgroups"
-            ></app-study-filters>
+      <ng-container>
+        <form [formGroup]="form" (ngSubmit)="addPublicationYear()">
+          <div style="width: 97%;" class="pl-1 mt-1">
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Publication year
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-divider></mat-divider> <br />
+
+            <div class="row">
+              <div class="col-4">
+                <select class="form-control"
+                        name="publicationYearPrefix"
+                        formControlName="publicationYearPrefix"
+                        #publicationYearPrefix
+                >
+                  <option selected disabled value="">Select...</option>
+                  <option value="equals">Equals</option>
+                  <option value="greater">Greater</option>
+                  <option value="less">Less</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter value(s)..."
+                        name="publicationYearValue"
+                        #publicationYearValue
+                        formControlName="publicationYearValue"
+                />
+              </div>
+              <div class="col-2">
+                <button mat-mini-fab
+                        color="accent" type="submit"
+                        style="margin-left: 0px !important;"
+                        name="addYearBtn"
+                        [disabled]="!form.valid"
+                >
+                  <i
+                          class="flaticon2-add-1"
+                          style="color: #fff !important;">
+                  </i>
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+          </div>
+        </form>
+      </ng-container>
+
+      <br />
+
+      <ng-container *ngFor="let category of categories">
+        <ng-container *ngIf="category.filters !== null && category.filters !== undefined">
+          <ng-container *ngIf="!category.hasChildren">
+            <app-categories
+                    [modelName]="category.modelName | translate: {Default: category.modelName}"
+                    [filters]="category.filters"
+                    [name]="category.name"
+                    [appName]="category.appName"
+                    [isSelected]="category.isSelected"
+                    [categoryId]="category.id"
+            ></app-categories>
           </ng-container>
 
-          <div style="height: 350px; width: 100%;"></div>
-
-        </div>
-        <!--end::Section-->
-
-      </div>
-      <!--end::Tabpane-->
-
-      <!--begin::Tabpane-->
-      <div
-        class="tab-pane fade pt-2 pr-5 mr-n5"
-        id="objects_filters"
-        [ngClass]="getActiveCSSClasses('objects_filters')"
-        role="tabpanel"
-      >
-
-        <div
-          [perfectScrollbar]="{ wheelPropagation: false }"
-          class="scroll mb-15"
-          [ngStyle]="{ height: '800px', position: 'relative' }"
-        >
-
-          <ng-container *ngFor="let objectFilter of objectFilers">
-            <app-object-filters
-              [groupName]="objectFilter.translate | translate: {Default: objectFilter.groupName}"
-              [subgroups]="objectFilter.subgroups"
-            ></app-object-filters>
+          <ng-container *ngIf="category.hasChildren">
+            <app-subcategories
+                    [modelName]="category.modelName | translate: {Default: category.modelName}"
+                    [filters]="category.filters"
+                    [name]="category.name"
+                    [appName]="category.appName"
+                    [isSelected]="category.isSelected"
+                    [categoryId]="category.id"
+            ></app-subcategories>
           </ng-container>
+        </ng-container>
 
-          <div style="height: 350px; width: 100%;"></div>
+      </ng-container>
 
-        </div>
+      <div style="height: 350px; width: 100%;"></div>
 
-      </div>
-      <!--end::Tabpane-->
     </div>
   </div>
   <!--end::Content-->

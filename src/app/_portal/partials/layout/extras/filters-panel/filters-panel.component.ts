@@ -1,43 +1,59 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { LayoutService } from '../../../../core';
-import { StudyFilters } from '../../../../core/filters/study.filters';
-import { DataObjectFilters } from '../../../../core/filters/object.filters';
 import { States } from '../../../../core/states/states';
-import {Subscription} from 'rxjs';
 import {StatesService} from '../../../../core/services/state/states.service';
+import {FilterGroupInterface} from '../../../../core/interfaces/filters/filter.interface';
+import {CategoriesService} from '../../../../core/services/portal/categories.service';
+import {FiltersBuilderService} from '../../../../core/services/filters-builder/filters-builder.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SnackbarService} from '../../../../core/services/snackbar/snackbar.service';
 import {SubscriptionEvents} from '../../../../core/states/subscription-events';
-import {FilterSampleInterface} from '../../../../core/interfaces/filters/filter-sample.interface';
+import {Subscription} from 'rxjs';
 
 
 @Component({
   selector: 'app-filters-panel',
   templateUrl: './filters-panel.component.html',
   styleUrls: ['./filters-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiltersPanelComponent implements OnInit {
   extrasFiltersPanelDirectionCSSClass = 'offcanvas-right';
   activeTabId:
-    | 'studies_filters'
-    | 'objects_filters' = 'studies_filters';
+    | 'categories';
 
-  studyFilters = StudyFilters;
-  objectFilers = DataObjectFilters;
+  categories: Array<FilterGroupInterface>;
 
-  filtersList: Array<FilterSampleInterface>;
+  form: FormGroup = new FormGroup({});
 
-  uploadingSessionEvent: Subscription;
+  clearFilterEventSubscription: Subscription;
+
+  @ViewChild('publicationYearPrefix') publicationYearPrefix: ElementRef;
+  @ViewChild('publicationYearValue') publicationYearValue: ElementRef;
 
   constructor(
     private layout: LayoutService,
     public states: States,
     private ref: ChangeDetectorRef,
-    private statesFunctions: StatesService,
-    private subscriptionEvents: SubscriptionEvents
+    private statesService: StatesService,
+    private categoriesService: CategoriesService,
+    private snackbarService: SnackbarService,
+    private subscriptionEvents: SubscriptionEvents,
+    private fb: FormBuilder,
+    private filtersBuilder: FiltersBuilderService,
   ) {
     ref.detach();
-    this.uploadingSessionEvent = this.subscriptionEvents.getSessionUploadingEvent().subscribe(() => {
-      this.onUploadingFilters();
+
+    this.form = fb.group({
+      publicationYearPrefix: ['', [Validators.required]],
+      publicationYearValue: ['', [Validators.required,
+        Validators.pattern(/^(?=.*\d)[\d ]+$/)]]
     });
+
+    this.clearFilterEventSubscription = this.subscriptionEvents.getClearFilterEvent().subscribe(() => {
+      this.clearFormData();
+    });
+
     setInterval(() => {
       if (!this.ref['destroyed']) {
         this.ref.detectChanges();
@@ -45,58 +61,103 @@ export class FiltersPanelComponent implements OnInit {
     }, 1);
   }
 
-  onUploadingFilters() {
+  addPublicationYear() {
 
-    const filtersList = this.statesFunctions.filtersList;
+    const publicationYearPrefix = this.form.value.publicationYearPrefix;
+    const publicationYearValue = this.form.value.publicationYearValue;
 
-    if (filtersList.length > 0) {
+    let message = 'Publication year ';
+    const close = 'Close';
 
-      for (const filterVal of filtersList) {
-        this.studyFilters.forEach((filter) => {
-          filter.subgroups.forEach((subgroup) => {
-            subgroup.values.forEach((param) => {
-              if (param.name === filterVal.name) {
-                param.isSelected = false;
-              }
-            });
-          });
-        });
+    let resourcePropertyName = '';
+    let modelPropertyName = '';
 
-        this.objectFilers.forEach((filter) => {
-          filter.subgroups.forEach((subgroup) => {
-            subgroup.values.forEach((param) => {
-              if (param.name === filterVal.name) {
-                param.isSelected = false;
-              }
-            });
-          });
-        });
-      }
-    } else {
-      this.studyFilters.forEach((filter) => {
-        filter.subgroups.forEach((subgroup) => {
-          subgroup.values.forEach((param) => {
-            param.isSelected = true;
-          });
-        });
-      });
+    if (publicationYearPrefix === 'equals') {
 
-      this.objectFilers.forEach((filter) => {
-        filter.subgroups.forEach((subgroup) => {
-          subgroup.values.forEach((param) => {
-            param.isSelected = true;
-          });
-        });
-      });
+      message = message + 'is: ' + publicationYearValue;
+      resourcePropertyName = 'year_of_publication_in';
+      modelPropertyName = 'resource__year_of_publication__in';
+
+    } else if (publicationYearPrefix === 'greater') {
+
+      message = message + 'is greater than: ' + publicationYearValue;
+      resourcePropertyName = 'year_of_publication_gt';
+      modelPropertyName = 'resource__year_of_publication__gt';
+
+    } else if (publicationYearPrefix === 'less') {
+
+      message = message + 'is less than: ' + publicationYearValue;
+      resourcePropertyName = 'year_of_publication_lt';
+      modelPropertyName = 'resource__year_of_publication__lt';
+
     }
 
+    let indx = 0;
+    if (resourcePropertyName === 'year_of_publication_in') {
+      indx = this.statesService.filtersList.findIndex(
+          x => x.value === publicationYearValue
+              && x.resourcePropertyName === resourcePropertyName
+      );
+    } else {
+      indx = this.statesService.filtersList.findIndex(
+          x => x.resourcePropertyName === resourcePropertyName
+      );
+    }
+
+    if (indx <= -1) {
+
+      const id = Math.floor(Math.random() * 999);
+
+      this.statesService.filtersList.push({
+        id,
+        modelPropertyName,
+        resourcePropertyName,
+        value: publicationYearValue,
+        name: message,
+        isSelected: false,
+      });
+
+    } else {
+
+      this.statesService.filtersList.splice(indx, 1);
+
+      const id = Math.floor(Math.random() * 999);
+
+      this.statesService.filtersList.push({
+        id,
+        modelPropertyName,
+        resourcePropertyName,
+        value: publicationYearValue,
+        name: message,
+        isSelected: false,
+      });
+
+    }
+
+    this.snackbarService.snackbarMessage(message, close);
+
+    this.statesService.isFiltered = this.statesService.filtersList.length > 0;
+    this.subscriptionEvents.sendFilterEvent();
+
   }
+
+
+  clearFormData() {
+    if (this.publicationYearPrefix !== undefined && this.publicationYearValue !== undefined) {
+      this.publicationYearPrefix.nativeElement.value = '';
+      this.publicationYearValue.nativeElement.value = '';
+    }
+  }
+
 
   ngOnInit(): void {
     this.extrasFiltersPanelDirectionCSSClass = `offcanvas-${this.layout.getProp(
       'extras.filtersPanel.offcanvas.direction'
     )}`;
-    this.states.filtersList.subscribe(value => this.filtersList = value);
+    this.categoriesService.getCategories().subscribe(data => {
+      this.categories = data;
+      this.statesService.categoriesList = data;
+    });
   }
 
   setActiveTabId(tabId) {

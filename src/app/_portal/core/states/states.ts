@@ -1,9 +1,8 @@
 import {BehaviorSubject} from 'rxjs';
 import {DefaultStates} from './default.states';
 import {Injectable} from '@angular/core';
-import {SessionDataInterface, SessionRecordInterface} from '../interfaces/states/session.interface';
 import {ResourceInterface} from '../interfaces/entities/resource.interface';
-import {FilterInterface} from '../interfaces/filters/filter.interface';
+import {FilterGroupInterface, FilterInterface, FiltersListInterface} from '../interfaces/filters/filter.interface';
 import {RequestBodyInterface} from '../interfaces/requests/request-body.interface';
 
 
@@ -24,16 +23,13 @@ export class States {
   public searchParams: BehaviorSubject<RequestBodyInterface> =
       new BehaviorSubject<RequestBodyInterface>(this.defaultStates.defaultSearchParams);
 
+  public categoriesList: BehaviorSubject<Array<FilterGroupInterface>> =
+      new BehaviorSubject<Array<FilterGroupInterface>>(this.defaultStates.defaultCategoriesList);
+
   public filtersList: BehaviorSubject<Array<FilterInterface>> =
       new BehaviorSubject<Array<FilterInterface>>(this.defaultStates.defaultFiltersList);
 
-  public singleStudy: BehaviorSubject<ResourceInterface> =
-      new BehaviorSubject<ResourceInterface>(this.defaultStates.defaultSingleStudy);
-
-  public activeSession: BehaviorSubject<SessionDataInterface> =
-      new BehaviorSubject<SessionDataInterface>(this.defaultStates.defaultActiveSession);
-
-  public sessionsList: BehaviorSubject<Array<SessionRecordInterface>> =
-      new BehaviorSubject<Array<SessionRecordInterface>>(this.defaultStates.defaultSessionsList);
+  public singleResource: BehaviorSubject<ResourceInterface> =
+      new BehaviorSubject<ResourceInterface>(this.defaultStates.defaultSingleResource);
 
 }

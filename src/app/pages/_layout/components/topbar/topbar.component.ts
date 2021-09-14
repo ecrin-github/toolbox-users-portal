@@ -7,12 +7,12 @@ import {StatesService} from '../../../../_portal/core/services/state/states.serv
 import {SubscriptionEvents} from '../../../../_portal/core/states/subscription-events';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ExportModalComponent} from './modals/export-modal/export-modal.component';
-import {SaveModalComponent} from './modals/save-modal/save-modal.component';
-import {LoadModalComponent} from './modals/load-modal/load-modal.component';
-import {SingleResourceExportModalComponent} from './modals/single-resource-export-modal/single-resource-export-modal.component';
 import {SnackbarService} from '../../../../_portal/core/services/snackbar/snackbar.service';
-import {RequestBodyInterface} from '../../../../_portal/core/interfaces/requests/request-body.interface';
+import {ResponseInterface} from '../../../../_portal/core/interfaces/responses/server-response.interface';
+import {QueryApiService} from '../../../../_portal/core/services/query-api/query-api.service';
+import {FiltersBuilderService} from '../../../../_portal/core/services/filters-builder/filters-builder.service';
+import {PdfService} from '../../../../_portal/core/services/portal/pdf.service';
+import {FileSaverService} from 'ngx-filesaver';
 
 
 @Component({
@@ -27,6 +27,10 @@ export class TopbarComponent implements OnInit, AfterViewInit {
 
   constructor(
     private statesService: StatesService,
+    private queryApiService: QueryApiService,
+    private filtersBuilder: FiltersBuilderService,
+    private fileSaver: FileSaverService,
+    private pdfService: PdfService,
     private subscriptionEvents: SubscriptionEvents,
     private layout: LayoutService,
     public router: Router,
@@ -48,7 +52,9 @@ export class TopbarComponent implements OnInit, AfterViewInit {
 
     this.statesService.isCleared = true;
 
-    // this.statesService.searchParams = {searchType, searchBody};
+    this.statesService.setDefaultSearchParams();
+
+    this.statesService.setDefaultFiltersList();
 
     this.subscriptionEvents.sendClearEvent();
 
@@ -57,20 +63,62 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   }
 
 
-  openExportModal() {
-    this.modal.open(ExportModalComponent, {centered: true});
+  generateJson() {
+    if (!this.statesService.isCleared) {
+      let filename: string;
+      filename = 'Session Storage - ' + Date.now() + '.json';
+
+      const searchParams = this.statesService.searchParams;
+      searchParams.page = null;
+      searchParams.size = null;
+      searchParams.filters = this.filtersBuilder.filtersBuilder();
+
+      this.queryApiService.getResources(searchParams).subscribe(
+          (data: ResponseInterface) => {
+            const fileType = this.fileSaver.genType(filename);
+            const blob = new Blob([JSON.stringify(data.data)], {type: fileType});
+            this.fileSaver.save(blob, filename);
+          });
+    } else {
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.EMPTY-SESSION', 'SNACKBAR.CLOSE');
+    }
   }
 
-  openLoadModal() {
-    this.modal.open(LoadModalComponent, {centered: true});
+  generatePdf(){
+    if (!this.statesService.isCleared) {
+
+      const searchParams = this.statesService.searchParams;
+      searchParams.page = null;
+      searchParams.size = null;
+      searchParams.filters = this.filtersBuilder.filtersBuilder();
+
+      this.queryApiService.getResources(searchParams).subscribe(
+          (data: ResponseInterface) => {
+            this.pdfService.multipleResourcesPDFGenerator(data.data);
+          });
+    } else {
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.EMPTY-SESSION', 'SNACKBAR.CLOSE');
+    }
   }
 
-  openSaveModal() {
-    this.modal.open(SaveModalComponent, {centered: true});
+
+  generateResourceJson() {
+    if (this.statesService.singleResource) {
+      const filename = this.statesService.singleResource.title + '.json';
+      const fileType = this.fileSaver.genType(filename);
+      const blob = new Blob([JSON.stringify(this.statesService.singleResource)], {type: fileType});
+      this.fileSaver.save(blob, filename);
+    } else {
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.NO-STUDY', 'SNACKBAR.CLOSE');
+    }
   }
 
-  openSingleStudyModal() {
-    this.modal.open(SingleResourceExportModalComponent, {centered: true});
+  generateResourcePdf(){
+    if (this.statesService.singleResource) {
+      this.pdfService.singleResourcePDFGenerator(this.statesService.singleResource);
+    } else {
+      this.snackbarService.snackbarTranslateMessage('MODALS.MESSAGES.NO-STUDY', 'SNACKBAR.CLOSE');
+    }
   }
 
 
