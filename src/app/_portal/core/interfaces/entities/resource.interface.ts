@@ -15,7 +15,7 @@ export interface ResourceInterface {
     year_of_publication: number;
     doi: string;
     language: string;
-    type_of_resource: TypeOfResourceInterface | null;
+    type_of_resource: string | null;
     url: string;
     resource_file: string;
     tags: TagsInterface | null;

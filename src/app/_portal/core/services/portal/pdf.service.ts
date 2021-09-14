@@ -19,7 +19,7 @@ export class PdfService {
 
     data.forEach((resourceData, index) => {
 
-      bodyData.push([{content: resourceData.title, colSpan: 3, rowSpan: 1,
+      bodyData.push([{content: resourceData.title, colSpan: 2, rowSpan: 1,
         styles: {halign: 'left', fontStyle: 'bold', fontSize: 16}}]);
 
       let abstract = 'NaN';
@@ -28,8 +28,12 @@ export class PdfService {
           abstract = resourceData.abstract;
         }
       }
-      bodyData.push([{content: 'Abstracts:' + '\n\n' + abstract, colSpan: 3, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 14}}]);
+      bodyData.push([
+          {content: 'Abstracts', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: abstract, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
 
       let authors = 'NaN';
@@ -38,20 +42,12 @@ export class PdfService {
           authors = resourceData.authors;
         }
       }
-
-      let url = 'NaN';
-      if (resourceData.url !== null && resourceData.url !== undefined) {
-        if (resourceData.url.trim() !== '') {
-          url = resourceData.url;
-        }
-      }
-
-      let fileUrl = 'NaN';
-      if (resourceData.resource_file !== null && resourceData.resource_file !== undefined) {
-        if (resourceData.resource_file.trim() !== '') {
-          fileUrl = resourceData.resource_file;
-        }
-      }
+      bodyData.push([
+        {content: 'Authors', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: authors, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let doi = 'NaN';
       if (resourceData.doi !== null && resourceData.doi !== undefined) {
@@ -59,36 +55,69 @@ export class PdfService {
           doi = resourceData.doi;
         }
       }
+      bodyData.push([
+        {content: 'DOI', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: doi, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let yearOfPublication = 'NaN';
       if (resourceData.year_of_publication !== null && resourceData.year_of_publication !== undefined) {
         yearOfPublication = resourceData.year_of_publication.toString();
       }
+      bodyData.push([
+        {content: 'Publication year', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: yearOfPublication, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let typeOfResource = 'NaN';
       if (resourceData.type_of_resource !== null && resourceData.type_of_resource !== undefined) {
-        if (resourceData.type_of_resource.name !== '') {
-          typeOfResource = resourceData.type_of_resource.name;
+        if (resourceData.type_of_resource.trim() !== '') {
+          typeOfResource = resourceData.type_of_resource;
         }
       }
       bodyData.push([
-        {content: 'Author(s):' + '\n\n' + authors, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'DOI:' + '\n\n' + doi, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'Year of publication:' + '\n\n' + yearOfPublication, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}}
+        {content: 'Type of resource', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: typeOfResource, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
       ]);
+
+      let url = 'NaN';
+      if (resourceData.url !== null && resourceData.url !== undefined) {
+        if (resourceData.url.trim() !== '') {
+          url = resourceData.url;
+        }
+      }
+      bodyData.push([
+        {content: 'URL', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: url, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
+
+      let fileUrl = 'NaN';
+      if (resourceData.resource_file !== null && resourceData.resource_file !== undefined) {
+        if (resourceData.resource_file.trim() !== '') {
+          fileUrl = resourceData.resource_file;
+        }
+      }
+      bodyData.push([
+        {content: 'Attached file', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: fileUrl, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
+
+
 
       bodyData.push([
-        {content: 'Type of resource:' + '\n\n' + typeOfResource, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'URL:' + '\n\n' + url, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'Attached file URL:' + '\n\n' + fileUrl, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}}
+        {content: 'Categories information', rowSpan: 1, colSpan: 2,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 14, minCellWidth: 45}},
       ]);
-
 
       let resourceTypes = '';
       if (resourceData.tags.resource_type !== null && resourceData.tags.resource_type !== undefined) {
@@ -100,6 +129,12 @@ export class PdfService {
           resourceTypes = 'NaN';
         }
       }
+      bodyData.push([
+        {content: 'Resource type(s)', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: resourceTypes, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let researchFields = '';
       if (resourceData.tags.research_field !== null && resourceData.tags.research_field !== undefined) {
@@ -111,26 +146,12 @@ export class PdfService {
           researchFields = 'NaN';
         }
       }
-
-      let specificTopics = '';
-      if (resourceData.tags.specific_topics !== null && resourceData.tags.specific_topics !== undefined) {
-        if (resourceData.tags.specific_topics.length  > 0) {
-          for (const specTopic of resourceData.tags.specific_topics) {
-            specificTopics += specTopic.name + '; ';
-          }
-        } else {
-          specificTopics = 'NaN';
-        }
-      }
       bodyData.push([
-        {content: 'Resource type(s):' + '\n\n' + resourceTypes, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'Research field(s):' + '\n\n' + researchFields, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'Specific topic(s):' + '\n\n' + specificTopics, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}}
+        {content: 'Research field(s)', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: researchFields, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
       ]);
-
 
       let dataType = '';
       if (resourceData.tags.data_type !== null && resourceData.tags.data_type !== undefined) {
@@ -140,6 +161,12 @@ export class PdfService {
           dataType = 'NaN';
         }
       }
+      bodyData.push([
+        {content: 'Data type(s)', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: dataType, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let dataSubtypes = '';
       if (resourceData.tags.data_type !== null && resourceData.tags.data_type !== undefined) {
@@ -155,6 +182,12 @@ export class PdfService {
           dataSubtypes = 'NaN';
         }
       }
+      bodyData.push([
+        {content: 'Data subtype(s)', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: dataSubtypes, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let geoScope = '';
       if (resourceData.tags.geographical_scope !== null && resourceData.tags.geographical_scope !== undefined) {
@@ -164,6 +197,12 @@ export class PdfService {
           geoScope = 'NaN';
         }
       }
+      bodyData.push([
+        {content: 'Geographical scope', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: geoScope, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
 
       let countries = '';
       if (resourceData.tags.geographical_scope !== null && resourceData.tags.geographical_scope !== undefined) {
@@ -180,18 +219,27 @@ export class PdfService {
         }
       }
       bodyData.push([
-        {content: 'Data type:' + '\n\n' + dataType, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'Data subtype(s):' + '\n\n' + dataSubtypes, colSpan: 2, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
+        {content: 'Countries grouping', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: countries, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
       ]);
 
-
+      let specificTopics = '';
+      if (resourceData.tags.specific_topics !== null && resourceData.tags.specific_topics !== undefined) {
+        if (resourceData.tags.specific_topics.length  > 0) {
+          for (const specTopic of resourceData.tags.specific_topics) {
+            specificTopics += specTopic.name + '; ';
+          }
+        } else {
+          specificTopics = 'NaN';
+        }
+      }
       bodyData.push([
-        {content: 'Geographical scope:' + '\n\n' + geoScope, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'Countries grouping:' + '\n\n' + countries, colSpan: 2, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
+        {content: 'Specific topic(s)', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: specificTopics, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
       ]);
 
       // const splitTitle = doc.splitTextToSize(data[i].title, 180);
@@ -227,7 +275,7 @@ export class PdfService {
 
     const bodyData: Array<any> = [];
 
-    bodyData.push([{content: resourceData.title, colSpan: 3, rowSpan: 1,
+    bodyData.push([{content: resourceData.title, colSpan: 2, rowSpan: 1,
       styles: {halign: 'left', fontStyle: 'bold', fontSize: 16}}]);
 
     let abstract = 'NaN';
@@ -236,8 +284,12 @@ export class PdfService {
         abstract = resourceData.abstract;
       }
     }
-    bodyData.push([{content: 'Abstracts:' + '\n\n' + abstract, colSpan: 3, rowSpan: 1,
-      styles: {halign: 'left', fontStyle: 'normal', fontSize: 14}}]);
+    bodyData.push([
+      {content: 'Abstracts', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: abstract, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
 
     let authors = 'NaN';
@@ -246,20 +298,12 @@ export class PdfService {
         authors = resourceData.authors;
       }
     }
-
-    let url = 'NaN';
-    if (resourceData.url !== null && resourceData.url !== undefined) {
-      if (resourceData.url.trim() !== '') {
-        url = resourceData.url;
-      }
-    }
-
-    let fileUrl = 'NaN';
-    if (resourceData.resource_file !== null && resourceData.resource_file !== undefined) {
-      if (resourceData.resource_file.trim() !== '') {
-        fileUrl = resourceData.resource_file;
-      }
-    }
+    bodyData.push([
+      {content: 'Authors', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: authors, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let doi = 'NaN';
     if (resourceData.doi !== null && resourceData.doi !== undefined) {
@@ -267,36 +311,69 @@ export class PdfService {
         doi = resourceData.doi;
       }
     }
+    bodyData.push([
+      {content: 'DOI', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: doi, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let yearOfPublication = 'NaN';
     if (resourceData.year_of_publication !== null && resourceData.year_of_publication !== undefined) {
       yearOfPublication = resourceData.year_of_publication.toString();
     }
+    bodyData.push([
+      {content: 'Publication year', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: yearOfPublication, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let typeOfResource = 'NaN';
     if (resourceData.type_of_resource !== null && resourceData.type_of_resource !== undefined) {
-      if (resourceData.type_of_resource.name !== '') {
-        typeOfResource = resourceData.type_of_resource.name;
+      if (resourceData.type_of_resource.trim() !== '') {
+        typeOfResource = resourceData.type_of_resource;
       }
     }
     bodyData.push([
-        {content: 'Author(s):' + '\n\n' + authors, colSpan: 1, rowSpan: 1,
-      styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-        {content: 'DOI:' + '\n\n' + doi, colSpan: 1, rowSpan: 1,
-          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'Year of publication:' + '\n\n' + yearOfPublication, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}}
+      {content: 'Type of resource', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: typeOfResource, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
     ]);
+
+    let url = 'NaN';
+    if (resourceData.url !== null && resourceData.url !== undefined) {
+      if (resourceData.url.trim() !== '') {
+        url = resourceData.url;
+      }
+    }
+    bodyData.push([
+      {content: 'URL', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: url, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
+
+    let fileUrl = 'NaN';
+    if (resourceData.resource_file !== null && resourceData.resource_file !== undefined) {
+      if (resourceData.resource_file.trim() !== '') {
+        fileUrl = resourceData.resource_file;
+      }
+    }
+    bodyData.push([
+      {content: 'Attached file', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: fileUrl, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
+
+
 
     bodyData.push([
-      {content: 'Type of resource:' + '\n\n' + typeOfResource, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'URL:' + '\n\n' + url, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'Attached file URL:' + '\n\n' + fileUrl, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}}
+      {content: 'Categories information', rowSpan: 1, colSpan: 2,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 14, minCellWidth: 45}},
     ]);
-
 
     let resourceTypes = '';
     if (resourceData.tags.resource_type !== null && resourceData.tags.resource_type !== undefined) {
@@ -308,6 +385,12 @@ export class PdfService {
         resourceTypes = 'NaN';
       }
     }
+    bodyData.push([
+      {content: 'Resource type(s)', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: resourceTypes, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let researchFields = '';
     if (resourceData.tags.research_field !== null && resourceData.tags.research_field !== undefined) {
@@ -319,26 +402,12 @@ export class PdfService {
         researchFields = 'NaN';
       }
     }
-
-    let specificTopics = '';
-    if (resourceData.tags.specific_topics !== null && resourceData.tags.specific_topics !== undefined) {
-      if (resourceData.tags.specific_topics.length  > 0) {
-        for (const specTopic of resourceData.tags.specific_topics) {
-          specificTopics += specTopic.name + '; ';
-        }
-      } else {
-        specificTopics = 'NaN';
-      }
-    }
     bodyData.push([
-      {content: 'Resource type(s):' + '\n\n' + resourceTypes, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'Research field(s):' + '\n\n' + researchFields, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'Specific topic(s):' + '\n\n' + specificTopics, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}}
+      {content: 'Research field(s)', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: researchFields, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
     ]);
-
 
     let dataType = '';
     if (resourceData.tags.data_type !== null && resourceData.tags.data_type !== undefined) {
@@ -348,6 +417,12 @@ export class PdfService {
         dataType = 'NaN';
       }
     }
+    bodyData.push([
+      {content: 'Data type(s)', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: dataType, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let dataSubtypes = '';
     if (resourceData.tags.data_type !== null && resourceData.tags.data_type !== undefined) {
@@ -363,6 +438,12 @@ export class PdfService {
         dataSubtypes = 'NaN';
       }
     }
+    bodyData.push([
+      {content: 'Data subtype(s)', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: dataSubtypes, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let geoScope = '';
     if (resourceData.tags.geographical_scope !== null && resourceData.tags.geographical_scope !== undefined) {
@@ -372,6 +453,12 @@ export class PdfService {
         geoScope = 'NaN';
       }
     }
+    bodyData.push([
+      {content: 'Geographical scope', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: geoScope, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+    ]);
 
     let countries = '';
     if (resourceData.tags.geographical_scope !== null && resourceData.tags.geographical_scope !== undefined) {
@@ -388,17 +475,27 @@ export class PdfService {
       }
     }
     bodyData.push([
-      {content: 'Data type:' + '\n\n' + dataType, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'Data subtype(s):' + '\n\n' + dataSubtypes, colSpan: 2, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
+      {content: 'Countries grouping', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: countries, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
     ]);
 
+    let specificTopics = '';
+    if (resourceData.tags.specific_topics !== null && resourceData.tags.specific_topics !== undefined) {
+      if (resourceData.tags.specific_topics.length  > 0) {
+        for (const specTopic of resourceData.tags.specific_topics) {
+          specificTopics += specTopic.name + '; ';
+        }
+      } else {
+        specificTopics = 'NaN';
+      }
+    }
     bodyData.push([
-      {content: 'Geographical scope:' + '\n\n' + geoScope, colSpan: 1, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
-      {content: 'Countries grouping:' + '\n\n' + countries, colSpan: 2, rowSpan: 1,
-        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 45}},
+      {content: 'Specific topic(s)', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: specificTopics, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
     ]);
 
     // doc.text(doc.splitTextToSize(resourceData.title, 180), 15, 10);

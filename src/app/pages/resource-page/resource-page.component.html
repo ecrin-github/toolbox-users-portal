@@ -8,11 +8,11 @@
                     <mat-divider class="mt-5"></mat-divider>
 
 
-                    <!--<div class="row mt-5">
-                        <div class="col-4">
-                            <h3>Abstracts</h3>
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Abstracts</h4>
                         </div>
-                        <div class="col-8">
+                        <div class="col-9">
                             <p align="justify">
                                 <ng-container
                                         *ngIf="resource.abstract !== null
@@ -28,11 +28,11 @@
                     <mat-divider></mat-divider>
 
                     <div class="row mt-5">
-                        <div class="col-4">
-                            <h3>Author(s)</h3>
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Author(s)</h4>
                         </div>
-                        <div class="col-8">
-                            <p align="justify">
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
                                 <ng-container
                                         *ngIf="resource.authors !== null
                   && resource.authors !== undefined
@@ -46,10 +46,387 @@
 
                     <mat-divider></mat-divider>
 
-                    -->
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>DOI</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.doi !== null
+                  && resource.doi !== undefined
+                  && resource.doi.trim() !== '';
+                    else noneTemplate">
+                                    {{resource.doi}}
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Publication year</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.year_of_publication !== null
+                  && resource.year_of_publication !== undefined;
+                    else noneTemplate">
+                                    {{resource.year_of_publication}}
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Type of resource</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.type_of_resource !== null
+                  && resource.type_of_resource !== undefined;
+                    else noneTemplate">
+                                    {{resource.type_of_resource}}
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>URL</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.url !== null
+                  && resource.url !== undefined;
+                    else noneTemplate">
+                                    <a href="{{resource.url}}" target="_blank">Source link</a>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Attached file</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.resource_file !== null
+                  && resource.resource_file !== undefined;
+                    else noneTemplate">
+                                    <a href="{{resource.resource_file}}" target="_blank">File URL</a>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-12 text-center justify-content-center">
+                            <h3>Categories information</h3>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Resource type(s)</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.resource_type !== null
+                  && resource.tags.resource_type !== undefined; else noneTemplate"
+                                >
+                                    <ng-container *ngIf="resource.tags.resource_type.length > 0;
+                    else noneTemplate">
+
+                                        <ng-container *ngIf="resource.tags.resource_type.length === 1">
+                      <span *ngFor="let resource_type of resource.tags.resource_type">
+                      {{resource_type.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{resource_type.description}}"
+                             placement="auto"
+                             popoverTitle="{{resource_type.name}}"
+                          >
+                        </i>
+                      </span>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="resource.tags.resource_type.length > 1">
+                      <span *ngFor="let resource_type of resource.tags.resource_type">
+                      {{resource_type.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{resource_type.description}}"
+                             placement="auto"
+                             popoverTitle="{{resource_type.name}}"
+                          >
+                        </i> ;
+                      </span>
+                                        </ng-container>
+
+                                    </ng-container>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 text-center justify-content-center">
+                            <h4>Research field(s)</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.research_field !== null
+                  && resource.tags.research_field !== undefined; else noneTemplate"
+                                >
+                                    <ng-container *ngIf="resource.tags.research_field.length > 0;
+                    else noneTemplate">
+
+                                        <ng-container *ngIf="resource.tags.research_field.length === 1">
+                      <span *ngFor="let research_field of resource.tags.research_field">
+                      {{research_field.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{research_field.description}}"
+                             placement="auto"
+                             popoverTitle="{{research_field.name}}"
+                          >
+                        </i>
+                      </span>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="resource.tags.research_field.length > 1">
+                      <span *ngFor="let research_field of resource.tags.research_field">
+                      {{research_field.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{research_field.description}}"
+                             placement="auto"
+                             popoverTitle="{{research_field.name}}"
+                          >
+                        </i> ;
+                      </span>
+                                        </ng-container>
+
+                                    </ng-container>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Data type(s)</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.data_type !== null
+                  && resource.tags.data_type !== undefined; else noneTemplate"
+                                >
+                  <span>
+                      {{resource.tags.data_type.name}}
+                      <i class="fa fa-question-circle"
+                         ngbPopover="{{resource.tags.data_type.description}}"
+                         placement="auto"
+                         popoverTitle="{{resource.tags.data_type.name}}"
+                      >
+                    </i>
+                  </span>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Data subtype(s)</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.data_type !== null
+                && resource.tags.data_type !== undefined; else noneTemplate"
+                                >
+                                    <ng-container *ngIf="resource.tags.data_type.subs !== null
+                && resource.tags.data_type.subs !== undefined; else noneTemplate">
+
+                                        <ng-container *ngIf="resource.tags.data_type.subs.length > 0;
+                    else noneTemplate">
+
+                                            <ng-container *ngIf="resource.tags.data_type.subs.length === 1">
+                      <span *ngFor="let data_type_sub of resource.tags.data_type.subs">
+                        {{data_type_sub.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{data_type_sub.description}}"
+                             placement="auto"
+                             popoverTitle="{{data_type_sub.name}}"
+                          >
+                        </i>
+                      </span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="resource.tags.data_type.subs.length > 1">
+                     <span *ngFor="let data_type_sub of resource.tags.data_type.subs">
+                        {{data_type_sub.name}}
+                         <i class="fa fa-question-circle"
+                            ngbPopover="{{data_type_sub.description}}"
+                            placement="auto"
+                            popoverTitle="{{data_type_sub.name}}"
+                         >
+                        </i> ;
+                     </span>
+                                            </ng-container>
+
+                                        </ng-container>
+
+                                    </ng-container>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Geographical scope</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.geographical_scope !== null
+                  && resource.tags.geographical_scope !== undefined; else noneTemplate"
+                                >
+                  <span>
+                      {{resource.tags.geographical_scope.name}}
+                      <i class="fa fa-question-circle"
+                         ngbPopover="{{resource.tags.geographical_scope.description}}"
+                         placement="auto"
+                         popoverTitle="{{resource.tags.geographical_scope.name}}"
+                      >
+                    </i>
+                  </span>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h4>Countries grouping</h4>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.geographical_scope.countries_grouping !== null
+                && resource.tags.geographical_scope.countries_grouping !== undefined; else noneTemplate"
+                                >
+                                    <ng-container *ngIf="resource.tags.geographical_scope.countries_grouping !== null
+                && resource.tags.geographical_scope.countries_grouping !== undefined; else noneTemplate">
+
+                                        <ng-container *ngIf="resource.tags.geographical_scope.countries_grouping.length > 0;
+                    else noneTemplate">
+
+                                            <ng-container
+                                                    *ngIf="resource.tags.geographical_scope.countries_grouping.length === 1">
+                      <span *ngFor="let country of resource.tags.geographical_scope.countries_grouping">
+                        {{country}}
+                      </span>
+                                            </ng-container>
+
+                                            <ng-container
+                                                    *ngIf="resource.tags.geographical_scope.countries_grouping.length > 1">
+                     <span *ngFor="let country of resource.tags.geographical_scope.countries_grouping">
+                        {{country}};
+                     </span>
+                                            </ng-container>
+
+                                        </ng-container>
+
+                                    </ng-container>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="row mt-5">
+                        <div class="col-3 justify-content-center text-center">
+                            <h3>Specific topic(s)</h3>
+                        </div>
+                        <div class="col-9">
+                            <p align="justify" class="pt-1">
+                                <ng-container
+                                        *ngIf="resource.tags.specific_topics !== null
+                  && resource.tags.specific_topics !== undefined; else noneTemplate"
+                                >
+                                    <ng-container *ngIf="resource.tags.specific_topics.length > 0;
+                    else noneTemplate">
+
+                                        <ng-container *ngIf="resource.tags.specific_topics.length === 1">
+                      <span *ngFor="let specific_topic of resource.tags.specific_topics">
+                      {{specific_topic.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{specific_topic.description}}"
+                             placement="auto"
+                             popoverTitle="{{specific_topic.name}}"
+                          >
+                        </i>
+                      </span>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="resource.tags.specific_topics.length > 1">
+                      <span *ngFor="let specific_topic of resource.tags.specific_topics">
+                      {{specific_topic.name}}
+                          <i class="fa fa-question-circle"
+                             ngbPopover="{{specific_topic.description}}"
+                             placement="auto"
+                             popoverTitle="{{specific_topic.name}}"
+                          >
+                        </i> ;
+                      </span>
+                                        </ng-container>
+
+                                    </ng-container>
+                                </ng-container>
+                            </p>
+                        </div>
+                    </div>
 
 
 
+
+
+
+
+                    <!--
                     <div class="row mt-5 mb-3">
                         <div class="col-xl-12">
                             <h3>Abstracts</h3>
@@ -392,7 +769,11 @@
                                 </ng-container>
                             </p>
                         </div>
-                    </div>
+                    </div>-->
+
+
+
+
                 </div>
             </ng-container>
 
