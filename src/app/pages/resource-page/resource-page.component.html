@@ -19,7 +19,9 @@
                   && resource.abstract !== undefined
                   && resource.abstract.trim() !== '';
                     else noneTemplate">
-                                    {{resource.abstract}}
+                                    {{(showMore) ? resource.abstract : resource.abstract | slice:0:100}} <span *ngIf="!showMore"> ...</span>
+                                    <a href="javascript:;" *ngIf="!showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-MORE' | translate: {Default: '[Show More]'} }}</a>
+                                    <a href="javascript:;" *ngIf="showMore" (click)="showMoreToggle()">{{'SEARCH-PAGE.SHOW-LESS' | translate: {Default: '[Show Less]'} }}</a>
                                 </ng-container>
                             </p>
                         </div>

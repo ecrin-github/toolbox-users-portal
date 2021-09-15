@@ -16,6 +16,8 @@ export class ResourcePageComponent implements OnInit {
 
   public resource: ResourceInterface;
 
+  public showMore: boolean;
+
   constructor(
     private route: Router,
     private activeRoute: ActivatedRoute,
@@ -30,6 +32,7 @@ export class ResourcePageComponent implements OnInit {
       }
     );
     this.isLoading = true;
+    this.showMore = false;
     this.queryApiService.getByResourceId({id: this.resourceId}).subscribe(data => {
         if (data !== null && data !== undefined && Object.keys(data).length > 0) {
           this.resource = data;
@@ -47,6 +50,10 @@ export class ResourcePageComponent implements OnInit {
         this.ref.detectChanges();
       }
     }, 1);
+  }
+
+  showMoreToggle(){
+    return this.showMore = !this.showMore;
   }
 
   ngOnInit(): void {
