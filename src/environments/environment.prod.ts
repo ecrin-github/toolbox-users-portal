@@ -1,5 +1,3 @@
-import {host} from '@angular-devkit/build-angular/src/test-utils';
-
 export const environment = {
   production: true,
   appVersion: 'v.0.1.1',
