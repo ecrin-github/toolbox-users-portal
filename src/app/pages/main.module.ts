@@ -29,6 +29,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatListModule} from '@angular/material/list';
+import {AdminComponent} from './admin/admin.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {MatListModule} from '@angular/material/list';
 
     MainPageComponent,
     ResourcePageComponent,
+    AdminComponent
   ],
     imports: [
         CommonModule,
@@ -70,6 +72,10 @@ import {MatListModule} from '@angular/material/list';
                 path: 'resource/:id',
                 component: ResourcePageComponent
             },
+            {
+                path: 'admin',
+                component: AdminComponent
+            }
         ]),
         FormsModule,
         MatButtonModule,
