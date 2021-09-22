@@ -5,15 +5,15 @@
                 <div class="card-body">
                     <h1 class="mb-5">{{resource.title}}</h1>
 
-                    <mat-divider class="mt-5"></mat-divider>
+                    <mat-divider></mat-divider>
 
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Abstracts</h4>
+                            <h6 style="margin-top: 2px !important;">Abstracts</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.abstract !== null
                   && resource.abstract !== undefined
@@ -29,12 +29,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Author(s)</h4>
+                            <h6 style="margin-top: 2px !important;">Authors</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.authors !== null
                   && resource.authors !== undefined
@@ -48,12 +48,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>DOI</h4>
+                            <h6 style="margin-top: 2px !important;">DOI</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.doi !== null
                   && resource.doi !== undefined
@@ -67,12 +67,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Publication year</h4>
+                            <h6 style="margin-top: 2px !important;">Publication year</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.year_of_publication !== null
                   && resource.year_of_publication !== undefined;
@@ -85,12 +85,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Type of resource</h4>
+                            <h6 style="margin-top: 2px !important;">Type of resource</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.type_of_resource !== null
                   && resource.type_of_resource !== undefined;
@@ -103,12 +103,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>URL</h4>
+                            <h6 style="margin-top: 2px !important;">URL</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.url !== null
                   && resource.url !== undefined;
@@ -121,12 +121,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Attached file</h4>
+                            <h6 style="margin-top: 2px !important;">Attached file</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.resource_file !== null
                   && resource.resource_file !== undefined;
@@ -139,7 +139,7 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-5" style="margin-bottom: -2px !important;">
                         <div class="col-12 text-center justify-content-center">
                             <h3>Categories information</h3>
                         </div>
@@ -147,12 +147,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Resource type(s)</h4>
+                            <h6 style="margin-top: 2px !important;">Resource types</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.resource_type !== null
                   && resource.tags.resource_type !== undefined; else noneTemplate"
@@ -192,12 +192,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 text-center justify-content-center">
-                            <h4>Research field(s)</h4>
+                            <h6 style="margin-top: 2px !important;">Research fields</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.research_field !== null
                   && resource.tags.research_field !== undefined; else noneTemplate"
@@ -237,12 +237,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Data type(s)</h4>
+                            <h6 style="margin-top: 2px !important;">Data types</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.data_type !== null
                   && resource.tags.data_type !== undefined; else noneTemplate"
@@ -263,12 +263,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Data subtype(s)</h4>
+                            <h6 style="margin-top: 2px !important;">Data subtypes</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.data_type !== null
                 && resource.tags.data_type !== undefined; else noneTemplate"
@@ -313,12 +313,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Geographical scope</h4>
+                            <h6 style="margin-top: 2px !important;">Geographical scope</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.geographical_scope !== null
                   && resource.tags.geographical_scope !== undefined; else noneTemplate"
@@ -339,12 +339,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h4>Countries grouping</h4>
+                            <h6 style="margin-top: 2px !important;">Countries grouping</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.geographical_scope.countries_grouping !== null
                 && resource.tags.geographical_scope.countries_grouping !== undefined; else noneTemplate"
@@ -379,12 +379,12 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="row mt-5">
+                    <div class="row mt-1" style="margin-bottom: -10px !important;">
                         <div class="col-3 justify-content-center text-center">
-                            <h3>Specific topic(s)</h3>
+                            <h6 style="margin-top: 2px !important;">Specific topics</h6>
                         </div>
                         <div class="col-9">
-                            <p align="justify" class="pt-1">
+                            <p align="justify" style="margin-top: 3px !important;">
                                 <ng-container
                                         *ngIf="resource.tags.specific_topics !== null
                   && resource.tags.specific_topics !== undefined; else noneTemplate"
