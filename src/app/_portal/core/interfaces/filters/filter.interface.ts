@@ -23,6 +23,7 @@ export interface FilterGroupInterface {
 
 
 export interface FiltersListInterface {
+    sensitive_data__id__in: Array<number>;
     resource_type__id__in: Array<number>;
     research_field__id__in: Array<number>;
     stage_in_ds__id__in: Array<number>;

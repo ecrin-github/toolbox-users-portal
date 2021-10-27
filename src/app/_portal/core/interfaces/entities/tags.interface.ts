@@ -1,3 +1,8 @@
+interface SensitiveData {
+    name: string;
+    description: string;
+}
+
 interface ResourceTypeInterface {
     name: string;
     description: string;
@@ -36,6 +41,7 @@ interface StageInDsInterface {
 }
 
 export interface TagsInterface {
+    sensitive_data: Array<ResourceTypeInterface>;
     resource_type: Array<ResourceTypeInterface>;
     research_field: Array<ResearchFieldInterface>;
     specific_topics: Array<SpecificTopicInterface>;

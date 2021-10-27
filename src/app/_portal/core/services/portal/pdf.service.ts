@@ -119,6 +119,24 @@ export class PdfService {
           styles: {halign: 'center', fontStyle: 'bold', fontSize: 14, minCellWidth: 45}},
       ]);
 
+
+      let sensitiveData = '';
+      if (resourceData.tags.sensitive_data !== null && resourceData.tags.sensitive_data !== undefined) {
+        if (resourceData.tags.sensitive_data.length  > 0) {
+          for (const resType of resourceData.tags.sensitive_data) {
+            sensitiveData += resType.name + '; ';
+          }
+        } else {
+          sensitiveData = 'NaN';
+        }
+      }
+      bodyData.push([
+        {content: 'Sensitive data:', rowSpan: 1,
+          styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+        {content: sensitiveData, rowSpan: 1,
+          styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
+      ]);
+
       let resourceTypes = '';
       if (resourceData.tags.resource_type !== null && resourceData.tags.resource_type !== undefined) {
         if (resourceData.tags.resource_type.length  > 0) {
@@ -373,6 +391,24 @@ export class PdfService {
     bodyData.push([
       {content: 'Categories information', rowSpan: 1, colSpan: 2,
         styles: {halign: 'center', fontStyle: 'bold', fontSize: 14, minCellWidth: 45}},
+    ]);
+
+
+    let sensitiveData = '';
+    if (resourceData.tags.sensitive_data !== null && resourceData.tags.sensitive_data !== undefined) {
+      if (resourceData.tags.sensitive_data.length  > 0) {
+        for (const resType of resourceData.tags.sensitive_data) {
+          sensitiveData += resType.name + '; ';
+        }
+      } else {
+        sensitiveData = 'NaN';
+      }
+    }
+    bodyData.push([
+      {content: 'Sensitive data:', rowSpan: 1,
+        styles: {halign: 'center', fontStyle: 'bold', fontSize: 12, minCellWidth: 45}},
+      {content: sensitiveData, rowSpan: 1,
+        styles: {halign: 'left', fontStyle: 'normal', fontSize: 12, minCellWidth: 90}}
     ]);
 
     let resourceTypes = '';

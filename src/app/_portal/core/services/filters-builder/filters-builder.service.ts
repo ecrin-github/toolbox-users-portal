@@ -15,6 +15,7 @@ export class FiltersBuilderService {
 
   filtersBuilder(): FiltersListInterface {
     this.exceptionFiltersArray = {
+      sensitive_data__id__in: [],
       resource_type__id__in: [],
       research_field__id__in: [],
       stage_in_ds__id__in: [],
@@ -73,6 +74,10 @@ export class FiltersBuilderService {
                 }
               }
             }
+          }
+
+          if (filter.resourcePropertyName === 'sensitive_data') {
+            this.exceptionFiltersArray.sensitive_data__id__in.push(filter.id);
           }
 
           if (filter.resourcePropertyName === 'data_type_subs') {
