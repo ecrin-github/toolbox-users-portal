@@ -5,7 +5,7 @@ export const environment = {
   // HOSTNAME
   // hostname: 'http://localhost:8000/',
   // hostname: 'http://51.210.99.16:8000/',
-  hostname: 'http://tsdo.lifescience-ri.eu:8000/',
+  hostname: 'https://tsdo-admin.ecrin-rms.org/',
 
   // Back-end configs
   apiBaseUrl: 'api/',
