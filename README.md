@@ -10,4 +10,4 @@ Project's description: [Google doc](https://docs.google.com/document/d/1U_SMw1SI
 Disclaimer: [Google doc](https://docs.google.com/document/d/1n7wlju0ctE7_vB58iBshWYQ-BCAp47tPUXKBvtUsVOg/edit)
 
 ## Guides
-User guide: [Google doc](https://docs.google.com/document/d/1qcprjPSWs1PD1F1LeUgC73YOVEKLNwm8oxyhc3MNfyQ)\
+User guide: [Google doc](https://docs.google.com/document/d/1qcprjPSWs1PD1F1LeUgC73YOVEKLNwm8oxyhc3MNfyQ)
